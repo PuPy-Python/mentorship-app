@@ -20,5 +20,9 @@ While developing, if you need to install a new package, run
 `pipenv install --dev packagename`. To uninstall a package, replace `install`
 with `uninstall`.
 
+Before updating your pull request, run `pipenv lock` if you have installed
+any new packages. It is safe to run this if you have not installed anything
+(no changes will be made), so if you are not sure, go ahead and run it.
+
 Commit any changes that occur for `Pipfile` and `Pipfile.lock`. For the most
 part those should be "the right thing".
