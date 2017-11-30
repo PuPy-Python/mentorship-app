@@ -1,9 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "27132ec6245ab3a26e15c28317c33b36f49077d147459808ab7f1d454459abae"
+            "sha256": "0bbef8f9be04328c75980a982c376ed6fadb99a569fe681ae15d3e7b3beeed6b"
         },
-        "requires": {},
+        "requires": {
+            "python_version": "3.6"
+        },
         "sources": [
             {
                 "url": "https://pypi.python.org/simple",

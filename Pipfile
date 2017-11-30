@@ -4,3 +4,6 @@ verify_ssl = true
 
 [packages]
 Django = "<2.0,>1.11"
+
+[requires]
+python_version = "3.6"
