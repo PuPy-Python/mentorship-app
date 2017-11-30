@@ -29,7 +29,7 @@ part those should be "the right thing".
 
 ## Testing
 
-To run the tests, use pytest, such as with `pipenv run pytest`. This will run
-all tests written in typical Django style, as well as all other tests. For
-info on running pytest-style Django tests, see
+To run the tests, run `make test` (no pipenv). This will run `pytest` with
+coverage, including all tests written in typical Django style, as well as all
+other tests. For info on writing pytest-style Django tests, see
 https://pytest-django.readthedocs.io/en/latest/tutorial.html .

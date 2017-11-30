@@ -5,6 +5,10 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
+coverage = "*"
+pytest-cov = "*"
+pytest-pep8 = "*"
+python-coveralls = "*"
 
 [packages]
 Django = "<2.0,>1.11"

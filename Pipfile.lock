@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d74ff0acf34454752c0d9e7a632591b5eeb1ee561da13e7e110fb1eceab0fa02"
+            "sha256": "a6866d50d483caf9fe40d9c2140b7c4545b8a59b66df0bb851820e88f78c2328"
         },
         "requires": {
             "python_version": "3.6"
@@ -22,8 +22,29 @@
         }
     },
     "develop": {
+        "apipkg": {
+            "version": "==1.4"
+        },
         "attrs": {
             "version": "==17.3.0"
+        },
+        "certifi": {
+            "version": "==2017.11.5"
+        },
+        "chardet": {
+            "version": "==3.0.4"
+        },
+        "coverage": {
+            "version": "==4.4.2"
+        },
+        "execnet": {
+            "version": "==1.5.0"
+        },
+        "idna": {
+            "version": "==2.6"
+        },
+        "pep8": {
+            "version": "==1.7.1"
         },
         "pluggy": {
             "version": "==0.6.0"
@@ -34,14 +55,35 @@
         "pytest": {
             "version": "==3.3.0"
         },
+        "pytest-cache": {
+            "version": "==1.0"
+        },
+        "pytest-cov": {
+            "version": "==2.5.1"
+        },
         "pytest-django": {
             "version": "==3.1.2"
+        },
+        "pytest-pep8": {
+            "version": "==1.0.6"
+        },
+        "python-coveralls": {
+            "version": "==2.9.1"
+        },
+        "pyyaml": {
+            "version": "==3.12"
+        },
+        "requests": {
+            "version": "==2.18.4"
         },
         "setuptools": {
             "version": "==38.2.3"
         },
         "six": {
             "version": "==1.11.0"
+        },
+        "urllib3": {
+            "version": "==1.22"
         }
     }
 }
