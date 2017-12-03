@@ -26,3 +26,10 @@ any new packages. It is safe to run this if you have not installed anything
 
 Commit any changes that occur for `Pipfile` and `Pipfile.lock`. For the most
 part those should be "the right thing".
+
+## Testing
+
+To run the tests, run `make test` (no pipenv). This will run `pytest` with
+coverage, including all tests written in typical Django style, as well as all
+other tests. For info on writing pytest-style Django tests, see
+https://pytest-django.readthedocs.io/en/latest/tutorial.html .
