@@ -1,5 +1,7 @@
 # mentorship-app
 PuPPy Mentorship Application
+[![Build Status](https://travis-ci.org/PuPy-Python/mentorship-app.svg?branch=master)](https://travis-ci.org/PuPy-Python/mentorship-app)
+[![Coverage Status](https://coveralls.io/repos/github/PuPy-Python/mentorship-app/badge.svg)](https://coveralls.io/github/PuPy-Python/mentorship-app)
 
 
 ## Basic Pipenv Usage
