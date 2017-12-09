@@ -6,7 +6,7 @@ test:
 	pipenv run pytest --cov=mentorship --cov=mentorship_profile --pep8 --cov-branch
 
 ci:
-	pipenv run pytest --pep8 mentorship --cov=mentorship --cov-report term --cov-report html --cov-branch
+	pipenv run pytest --cov=mentorship --cov=mentorship_profile --pep8 --cov-branch --cov-report term --cov-report html
 
 coverage:
 	pipenv run coveralls
