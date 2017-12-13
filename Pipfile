@@ -11,7 +11,7 @@ pytest-django = "*"
 coverage = "*"
 pytest-cov = "*"
 "pytest-pep8" = "*"
-python-coveralls = "*"
+coveralls = "*"
 factory-boy = "*"
 
 
