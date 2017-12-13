@@ -8,11 +8,11 @@ verify_ssl = true
 
 pytest = "*"
 pytest-django = "*"
-coverage = "*"
 pytest-cov = "*"
 "pytest-pep8" = "*"
 coveralls = "*"
 factory-boy = "*"
+coverage = "*"
 
 
 [packages]
