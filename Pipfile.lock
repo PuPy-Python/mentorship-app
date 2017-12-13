@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a6866d50d483caf9fe40d9c2140b7c4545b8a59b66df0bb851820e88f78c2328"
+            "sha256": "246dd40b4fc9b5642bc0827969bf5ade5446adc6a59c6cac2c2fabbb35e9ea98"
         },
         "requires": {
             "python_version": "3.6"
@@ -15,7 +15,7 @@
     },
     "default": {
         "django": {
-            "version": "==1.11.7"
+            "version": "==1.11.8"
         },
         "pytz": {
             "version": "==2017.3"
@@ -37,6 +37,12 @@
         "coverage": {
             "version": "==4.4.2"
         },
+        "coveralls": {
+            "version": "==1.2.0"
+        },
+        "docopt": {
+            "version": "==0.6.2"
+        },
         "execnet": {
             "version": "==1.5.0"
         },
@@ -53,7 +59,7 @@
             "version": "==1.5.2"
         },
         "pytest": {
-            "version": "==3.3.0"
+            "version": "==3.3.1"
         },
         "pytest-cache": {
             "version": "==1.0"
@@ -67,17 +73,11 @@
         "pytest-pep8": {
             "version": "==1.0.6"
         },
-        "python-coveralls": {
-            "version": "==2.9.1"
-        },
-        "pyyaml": {
-            "version": "==3.12"
-        },
         "requests": {
             "version": "==2.18.4"
         },
         "setuptools": {
-            "version": "==38.2.3"
+            "version": "==38.2.4"
         },
         "six": {
             "version": "==1.11.0"
