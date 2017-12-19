@@ -1,7 +1,7 @@
 import factory
 from django.contrib.auth.models import User
 from django.test import TestCase
-from .models import Profile
+from .models import Profile, Mentor, Mentee
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -26,52 +26,90 @@ class ProfileTestCase(TestCase):
         user = UserFactory.create()
         self.assertEqual(user, Profile.objects.all().first().user)
 
-    def test_create_profile_default_values(self):
-        """Test a user profile is created with correct default values."""
-        profile = UserFactory.create().profile
-
-        self.assertEqual(profile.category, "unknown")
-        self.assertEqual(profile.mentor_status, "unapproved")
-        self.assertEqual(profile.currently_accepting_mentees, False)
-        self.assertEqual(
-            profile.mentee_capacity,
-            Profile.DEFAULT_MENTEE_CAPACITY
-        )
-
     def test_all_profile_fields(self):
         """Test saving a profile exercising fields."""
+        fake_bio = "Live long and prosper."
+        fake_linked_in_url = "www.linkedin.com/in/all_the_spam"
+        fake_repo_url = "www.github.com/bob"
+
         profile = UserFactory.create().profile
-        profile.bio = factory.Faker('text')
-        profile.linked_in_url = factory.Faker('url')
-        profile.repo_url = factory.Faker('url')
+        profile.bio = fake_bio
+        profile.linked_in_url = fake_linked_in_url
+        profile.repo_url = fake_repo_url
         profile.save()
+
+        test_profile = Profile.objects.first()
+        self.assertEqual(test_profile.bio, fake_bio)
+        self.assertEqual(test_profile.linked_in_url, fake_linked_in_url)
+        self.assertEqual(test_profile.repo_url, fake_repo_url)
+
+
+class MentorTestCase(TestCase):
+    """Unit tests for the Mentor model."""
+
+    def create_mentor(self):
+        """Helper function to creat Mentor instances."""
+        new_user = UserFactory.create()
+        new_mentor = Mentor(profile=new_user.profile)
+        new_mentor.save()
+        return new_mentor
+
+    def test_default_mentor_creation(self):
+        """Test default values for newly created mentor."""
+        new_mentor = self.create_mentor()
+
+        self.assertEqual(new_mentor.area_of_expertise, "unknown")
+        self.assertEqual(
+            new_mentor.mentee_capacity,
+            Mentor.DEFAULT_MENTEE_CAPACITY
+        )
+        self.assertFalse(new_mentor.currently_accepting_mentees)
+        self.assertEqual(new_mentor.profile, User.objects.first().profile)
 
     def test_approved_mentor_manager(self):
         """Test that ApprovedMentorManager returns only approved mentors."""
         for _ in range(10):
-            profile = UserFactory.create().profile
-            profile.mentor_status = 'approved'
-            profile.save()
+            mentor = self.create_mentor()
+            mentor.mentor_status = 'approved'
+            mentor.save()
 
         for _ in range(10):
-            profile = UserFactory.create().profile
+            mentor = self.create_mentor()
             # create 10 profiles with default mentor_status
-            profile.save()
+            mentor.save()
 
-        self.assertEqual(len(Profile.objects.all()), 20)
-        self.assertEqual(len(Profile.approved_mentors.all()), 10)
+        self.assertEqual(len(Mentor.objects.all()), 20)
+        self.assertEqual(len(Mentor.approved_mentors.all()), 10)
 
     def test_pending_mentor_manager(self):
         """Test that PendingMentorManager returns only pending mentors."""
         for _ in range(10):
-            profile = UserFactory.create().profile
-            profile.mentor_status = 'pending'
-            profile.save()
+            mentor = self.create_mentor()
+            mentor.mentor_status = 'pending'
+            mentor.save()
 
         for _ in range(10):
-            profile = UserFactory.create().profile
+            mentor = self.create_mentor()
             # create 10 profiles with default mentor_status
-            profile.save()
+            mentor.save()
 
-        self.assertEqual(len(Profile.objects.all()), 20)
-        self.assertEqual(len(Profile.pending_mentors.all()), 10)
+        self.assertEqual(len(Mentor.objects.all()), 20)
+        self.assertEqual(len(Mentor.pending_mentors.all()), 10)
+
+
+class MenteeTestCase(TestCase):
+    """Unit tests for the Mentee model."""
+
+    def create_mentee(self):
+        """Helper function to create Mentees."""
+        new_user = UserFactory.create()
+        new_mentee = Mentee(profile=new_user.profile)
+        new_mentee.save()
+        return new_mentee
+
+    def test_default_mentee_creation(self):
+        """Test default values for newly created mentee."""
+        new_mentee = self.create_mentee()
+
+        self.assertEqual(new_mentee.area_of_interest, "unknown")
+        self.assertEqual(new_mentee.profile, User.objects.first().profile)

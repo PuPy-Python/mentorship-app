@@ -5,43 +5,16 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
-class ApprovedMentorsManager(models.Manager):
-    """Return the set of approved Mentors."""
-
-    def get_queryset(self):
-        """Overwrite to return only approved Mentors."""
-        return super(ApprovedMentorsManager, self).get_queryset()\
-            .filter(mentor_status="approved").all()
-
-
-class PendingMentorsManager(models.Manager):
-    """Return the set of pending Mentors."""
-
-    def get_queryset(self):
-        """Overwrite to return only pending Mentors."""
-        return super(PendingMentorsManager, self).get_queryset()\
-            .filter(mentor_status="pending").all()
+CATEGORIES = (
+    ("data science", "Data Science"),
+    ("backend devops", "Back End / DevOps"),
+    ("web full stack", "Web / Full Stack Development"),
+    ("unknown", "Unknown")
+)
 
 
 class Profile(models.Model):
     """Definition of a user profile for the PuPPy Mentorship application."""
-
-    # Categories for areas of interest / expertise
-    CATEGORIES = (
-        ("data science", "Data Science"),
-        ("backend devops", "Back End / DevOps"),
-        ("web full stack", "Web / Full Stack Development"),
-        ("unknown", "Unknown")
-    )
-
-    MENTOR_STATUS = (
-        ("approved", "Approved"),
-        ("pending", "Pending"),
-        ("unapproved", "Unapproved")
-    )
-
-    DEFAULT_MENTEE_CAPACITY = 5
 
     """
         The User model contains the following fields that will be used:
@@ -52,6 +25,7 @@ class Profile(models.Model):
             last_name       str     Opt
             email           str     Opt
             is_staff        bool    Opt
+            is_active       bool    Opt
 
         Further details here:
         https://docs.djangoproject.com/en/1.11/ref/contrib/auth/
@@ -60,18 +34,6 @@ class Profile(models.Model):
         User,
         related_name="profile",
         on_delete=models.CASCADE
-    )
-
-    mentor_status = models.CharField(
-        default="unapproved",
-        choices=MENTOR_STATUS,
-        max_length=30
-    )
-
-    category = models.CharField(
-        choices=CATEGORIES,
-        max_length=30,
-        default="unknown"
     )
 
     slack_handle = models.CharField(
@@ -101,35 +63,7 @@ class Profile(models.Model):
         blank=False
     )
 
-    # Use ForeignKey to allow option of having more than one mentor.
-    mentors = models.ForeignKey(
-        User,
-        related_name="mentor_of",
-        blank=True,
-        null=True
-    )
-
-    # If an approved mentor, any profile can have many mentees.
-    mentees = models.ForeignKey(
-        User,
-        related_name="mentored_by",
-        blank=True,
-        null=True
-    )
-
-    currently_accepting_mentees = models.BooleanField(
-        default=False,
-    )
-
-    mentee_capacity = models.IntegerField(
-        default=DEFAULT_MENTEE_CAPACITY
-    )
-
     objects = models.Manager()
-
-    approved_mentors = ApprovedMentorsManager()
-
-    pending_mentors = PendingMentorsManager()
 
 
 @receiver(post_save, sender=User)
@@ -138,3 +72,79 @@ def make_profile_for_user(sender, instance, **kwargs):
     if kwargs["created"]:
         new_profile = Profile(user=instance)
         new_profile.save()
+
+
+class ApprovedMentorsManager(models.Manager):
+    """Return the set of approved Mentors."""
+
+    def get_queryset(self):
+        """Overwrite to return only approved Mentors."""
+        return super(ApprovedMentorsManager, self).get_queryset()\
+            .filter(mentor_status="approved").all()
+
+
+class PendingMentorsManager(models.Manager):
+    """Return the set of pending Mentors."""
+
+    def get_queryset(self):
+        """Overwrite to return only pending Mentors."""
+        return super(PendingMentorsManager, self).get_queryset()\
+            .filter(mentor_status="pending").all()
+
+
+class Mentor(models.Model):
+    """Define a table for tracking mentors."""
+
+    MENTOR_STATUS_CHOICES = (
+        ("approved", "Approved"),
+        ("pending", "Pending"),
+        ("unapproved", "Unapproved")
+    )
+
+    DEFAULT_MENTEE_CAPACITY = 5
+
+    profile = models.OneToOneField(
+        Profile
+    )
+
+    mentor_status = models.CharField(
+        default="unapproved",
+        choices=MENTOR_STATUS_CHOICES,
+        max_length=30
+    )
+
+    area_of_expertise = models.CharField(
+        choices=CATEGORIES,
+        max_length=30,
+        default="unknown"
+    )
+
+    approved_mentors = ApprovedMentorsManager()
+
+    pending_mentors = PendingMentorsManager()
+
+    mentee_capacity = models.IntegerField(
+        default=DEFAULT_MENTEE_CAPACITY
+    )
+
+    currently_accepting_mentees = models.BooleanField(
+        default=False,
+    )
+
+    objects = models.Manager()
+
+
+class Mentee(models.Model):
+    """Define a table for tracking mentees."""
+
+    profile = models.OneToOneField(
+        Profile
+    )
+
+    area_of_interest = models.CharField(
+        choices=CATEGORIES,
+        max_length=30,
+        default="unknown"
+    )
+
+    objects = models.Manager()
