@@ -1,0 +1,13 @@
+[run]
+include = 
+	mentorship/*
+	mentorship_profile/*
+
+[report]
+omit = 
+	*/migrations/*
+	*/wsgi.py
+	*/settings.py
+	*/__init__.py
+	*/tests.py
+	*/tests/*
