@@ -49,7 +49,7 @@ class Profile(models.Model):
     )
 
     # Url for github/gitlab/bitbucket account
-    repo_url = models.URLField(
+    projects_url = models.URLField(
         max_length=200,
         blank=True,
         null=True

@@ -1,13 +1,45 @@
 """This module defines custom Form classes for the Mentor and Mentee models."""
 
-# from registration.forms import RegistrationForm
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Mentor, Mentee
+from django.contrib.auth.models import User
+
+from .models import Mentor, Mentee, Profile
 
 
-class ProfileSignupForm(UserCreationForm):
+class UserSignupForm(UserCreationForm):
+    """SignUp form for the User Model."""
+
+    email = forms.CharField(
+        required=True,
+        label="Email",
+    )
+
+    first_name = forms.CharField(
+        required=False,
+        label="First Name",
+        help_text="Optional"
+    )
+
+    last_name = forms.CharField(
+        required=False,
+        label="Last Name",
+        help_text="Optional"
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "password1",
+            "password2"
+        )
+
+
+class ProfileSignupForm(forms.ModelForm):
     """Create a form for signing up a Profile Model."""
 
     slack_handle = forms.CharField(
@@ -18,15 +50,15 @@ class ProfileSignupForm(UserCreationForm):
 
     linked_in_url = forms.URLField(
         required=False,
-        label="Linked In URL",
-        help_text="Linked in URL (optional)"
+        label="LinkedIn URL",
+        help_text="LinkedIn URL (optional)"
     )
 
-    repo_url = forms.URLField(
+    projects_url = forms.URLField(
         required=False,
         label="Code Repo URL",
-        help_text="Code repository url (e.g. Github, Gitlab, Bitbucket)" +
-        "(optional)"
+        help_text="Coding Projects url (e.g. Github, Gitlab, Bitbucket, " +
+        "personal site) (optional)"
     )
 
     bio = forms.CharField(
@@ -37,15 +69,11 @@ class ProfileSignupForm(UserCreationForm):
     )
 
     class Meta:
-        model = User
+        model = Profile
         fields = (
-            "username",
-            "email",
-            "password1",
-            "password2",
             "slack_handle",
             "linked_in_url",
-            "repo_url",
+            "projects_url",
             "bio",
         )
 
@@ -68,6 +96,8 @@ class MenteeForm(forms.ModelForm):
 
     goals = forms.CharField(
         widget=forms.Textarea,
+        help_text="Tell us a bit about your goals and what you would like a " +
+        "mentor can help you with.  (e.g. career goals, technical skills, etc)"
     )
 
     class Meta:
