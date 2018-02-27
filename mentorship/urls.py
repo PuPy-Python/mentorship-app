@@ -22,10 +22,14 @@ from mentorship_profile import views as profile_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('django.contrib.auth.urls')),
-    url(r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        profile_views.activate_account_view, name='activate_account'),
-    url(r'^signup/mentor/', profile_views.register_mentor_view),
-    url(r'^signup/mentee/', profile_views.register_mentee_view),
+    url(
+        r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        profile_views.activate_account_view, name='activate_account'
+    ),
+    url(
+        r'^signup/(?P<account_type>[\w-]+)/',
+        profile_views.register_user_view
+    ),
     url(
         r'^activate/',
         TemplateView.as_view(

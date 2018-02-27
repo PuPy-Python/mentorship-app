@@ -12,5 +12,5 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     username = factory.Sequence(lambda n: "Test user {}".format(n))
     email = factory.LazyAttribute(
-        lambda x: "{}@foo.com".format(x.username.replace(" ", ""))
+        lambda x: "{}@example.com".format(x.username.replace(" ", ""))
     )
