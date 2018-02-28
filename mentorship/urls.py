@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('django.contrib.auth.urls')),
     url(
-        r'^activate_account/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        r'^activate_account/(?P<url_token>[0-9A-Za-z/_\-]+)/$',
         profile_views.activate_account_view, name='activate_account'
     ),
     url(

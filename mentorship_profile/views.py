@@ -1,4 +1,6 @@
 
+import re
+
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -48,7 +50,6 @@ def register_user_view(request, account_type):
         ):
 
             user = user_model_form.save(commit=False)
-            user.is_active = False
             user.profile = profile_form.save(commit=False)
             user.save()
             user.profile.save()
@@ -88,22 +89,29 @@ def _send_registration_email(request, user, acct_type):
     """Given request, user model, and acct type, send a registration email."""
     current_site = get_current_site(request)
     subject = "Activate your PuPPy Mentorship Account"
+
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    activation_token = account_activation_token.make_token(user)
+
+    url_token = uid.decode('utf-8') + '/' + activation_token
+
     message = render_to_string(
         'mentorship_profile/activation_email.html', {
             "user": user,
             "domain": current_site.domain,
             "account_type": acct_type,
-            "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-            "token": account_activation_token.make_token(user)
+            "url_token": url_token
         }
     )
     user.email_user(subject, message)
 
 
 @require_GET
-def activate_account_view(request, uidb64, token):
+def activate_account_view(request, url_token):
     """Account activation view."""
-    user = _get_user_from_uid(uidb64)
+    uid, token = _parse_url_token(url_token)
+
+    user = _get_user_from_uid(uid)
     valid_token = account_activation_token.check_token(user, token)
 
     if user is not None and valid_token:
@@ -131,3 +139,14 @@ def _get_user_from_uid(uidb64):
         return user
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         return None
+
+
+def _parse_url_token(url_token):
+    """Given activation token from url, parse into expected components."""
+    match = re.fullmatch(
+        '^([0-9A-Za-z_\-]+)/([0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
+        url_token
+    )
+    if match:
+        return match.group(1), match.group(2)
+    return None, None
