@@ -49,7 +49,7 @@ class Profile(models.Model):
     )
 
     # Url for github/gitlab/bitbucket account
-    repo_url = models.URLField(
+    projects_url = models.URLField(
         max_length=200,
         blank=True,
         null=True
@@ -59,9 +59,7 @@ class Profile(models.Model):
         blank=False
     )
 
-    goals = models.TextField(
-        blank=False
-    )
+    email_confirmed = models.BooleanField(default=False)
 
     objects = models.Manager()
 
@@ -145,6 +143,10 @@ class Mentee(models.Model):
         choices=CATEGORIES,
         max_length=30,
         default="unknown"
+    )
+
+    goals = models.TextField(
+        blank=False
     )
 
     objects = models.Manager()
