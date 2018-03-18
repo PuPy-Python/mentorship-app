@@ -36,5 +36,9 @@ urlpatterns = [
             template_name="mentorship_profile/activate_notification.html"
         ),
         name="activate_notification"
-    )
+    ),
+    url(r'^profile/$', profile_views.users_profile_view, name="profile"),
+    url(r'^profile/edit/$', profile_views.users_edit_profile_view, name="edit_profile"),
+    url(r'^profile/(?P<username>[\w.@+-]+)/$', profile_views.user_public_profile_view, name="user_profile")
+    url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$')
 ]

@@ -81,6 +81,16 @@ class ApprovedMentorsManager(models.Manager):
             .filter(mentor_status="approved").all()
 
 
+class AvailableMentorsManager(models.Manager):
+    """Return the set of available Mentors."""
+
+    def get_queryset(self):
+        return super(AvailableMentorsManager, self).get_queryset()\
+            .filter(mentor_status="approved")\
+            .filter(currently_accepting_mentees=True)
+# TODO: Return Mentors who have less than max allowed mentees.
+
+
 class PendingMentorsManager(models.Manager):
     """Return the set of pending Mentors."""
 
