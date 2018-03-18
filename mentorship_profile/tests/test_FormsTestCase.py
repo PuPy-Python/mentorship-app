@@ -15,7 +15,7 @@ class FormsTestCase(TestCase):
         """Test all fields of a valid user signup form."""
         valid_user_data = {
             "username": "Fred",
-            "email": "Fred@woohoo.com",
+            "email": "Fred@example.com",
             "first_name": "Marion",
             "last_name": "Berry",
             "password1": "supersecret",
@@ -49,8 +49,8 @@ class FormsTestCase(TestCase):
         """Test all fields of a valid profile form."""
         valid_profile_data = {
             "slack_handle": "freddie",
-            "linked_in_url": "www.linkedin.com",
-            "repo_url": "www.github.com",
+            "linked_in_url": "www.example.com",
+            "repo_url": "www.example.com",
             "bio": "Very personal info very required."
         }
 
@@ -62,7 +62,7 @@ class FormsTestCase(TestCase):
         invalid_profile_data = {
             "slack_handle": "freddie",
             "linked_in_url": "weeee",
-            "repo_url": "www.github.com",
+            "repo_url": "www.example.com",
         }
 
         test_form = ProfileSignupForm(invalid_profile_data)

@@ -1,7 +1,10 @@
 
+import re
+
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
+from django.http import Http404
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import render, redirect
@@ -17,113 +20,98 @@ from .forms import (
     MentorForm
 )
 
+ACCOUNT_TYPE_FORMS = {
+    "mentor": MentorForm,
+    "mentee": MenteeForm
+}
 
-def register_mentor_view(request):
-    """Mentor registration view."""
+
+def register_user_view(request, account_type):
+    """User registration view.
+
+    param `user_type` is a string which determines which ('mentor' or 'mentee')
+    type of user to register.
+    """
+    if not _is_valid_account_type(account_type):
+        raise Http404("Page not found.")
+
     if request.method == "POST":
-        user_form = UserSignupForm(request.POST, prefix="user")
+        user_model_form = UserSignupForm(request.POST, prefix="user")
         profile_form = ProfileSignupForm(request.POST, prefix="profile")
-        mentor_form = MentorForm(request.POST, prefix=("mentor"))
+        account_type_form = ACCOUNT_TYPE_FORMS[account_type](
+            request.POST,
+            prefix=(account_type)
+        )
 
         if (
-            user_form.is_valid() and
+            user_model_form.is_valid() and
             profile_form.is_valid() and
-            mentor_form.is_valid()
+            account_type_form.is_valid()
         ):
 
-            user = user_form.save(commit=False)
-            user.is_active = False
+            user = user_model_form.save(commit=False)
             user.profile = profile_form.save(commit=False)
             user.save()
             user.profile.save()
 
-            mentor = mentor_form.save(commit=False)
-            mentor.profile = user.profile
-            mentor.save()
+            account_type_instance = account_type_form.save(commit=False)
+            account_type_instance.profile = user.profile
+            account_type_instance.save()
 
-            _send_registration_email(request, user, "mentor")
+            _send_registration_email(request, user, account_type)
 
             return redirect('activate_notification')
 
     elif request.method == "GET":
-        user_form = UserSignupForm(prefix="user")
+        user_model_form = UserSignupForm(prefix="user")
         profile_form = ProfileSignupForm(prefix="profile")
-        mentor_form = MentorForm(prefix="mentor")
+        account_type_form = ACCOUNT_TYPE_FORMS[account_type](
+            prefix=account_type
+        )
 
     return render(
         request,
         'mentorship_profile/register.html',
         {
-            'user_form': user_form,
+            'user_form': user_model_form,
             'profile_form': profile_form,
-            'account_type_form': mentor_form
+            'account_type_form': account_type_form
         }
     )
 
 
-def register_mentee_view(request):
-    """Mentee registration view."""
-    if request.method == "POST":
-        user_form = UserSignupForm(request.POST, prefix="user")
-        profile_form = ProfileSignupForm(request.POST, prefix="profile")
-        mentee_form = MenteeForm(request.POST, prefix=("mentee"))
-
-        if (
-                user_form.is_valid() and
-                profile_form.is_valid() and
-                mentee_form.is_valid()
-        ):
-
-            user = user_form.save(commit=False)
-            user.is_active = False
-            user.profile = profile_form.save(commit=False)
-            user.save()
-            user.profile.save()
-
-            mentee = mentee_form.save(commit=False)
-            mentee.profile = user.profile
-            mentee.save()
-
-            _send_registration_email(request, user, "mentee")
-
-            return redirect('activate_notification')
-
-    elif request.method == "GET":
-        user_form = UserSignupForm(prefix="user")
-        profile_form = ProfileSignupForm(prefix="profile")
-        mentee_form = MenteeForm(prefix=("mentee"))
-
-    return render(
-        request,
-        'mentorship_profile/register.html',
-        {
-            'user_form': user_form,
-            'profile_form': profile_form,
-            'account_type_form': mentee_form
-        }
-    )
+def _is_valid_account_type(account_type):
+    """Validate the `account_type` param, must be 'mentor' or 'mentee'."""
+    return account_type in ACCOUNT_TYPE_FORMS.keys()
 
 
 def _send_registration_email(request, user, acct_type):
     """Given request, user model, and acct type, send a registration email."""
     current_site = get_current_site(request)
     subject = "Activate your PuPPy Mentorship Account"
+
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    activation_token = account_activation_token.make_token(user)
+
+    url_token = uid.decode('utf-8') + '/' + activation_token
+
     message = render_to_string(
         'mentorship_profile/activation_email.html', {
             "user": user,
             "domain": current_site.domain,
             "account_type": acct_type,
-            "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-            "token": account_activation_token.make_token(user)
+            "url_token": url_token
         }
     )
     user.email_user(subject, message)
 
 
 @require_GET
-def activate_account_view(request, uidb64, token):
+def activate_account_view(request, url_token):
     """Account activation view."""
-    user = _get_user_from_uid(uidb64)
+    uid, token = _parse_url_token(url_token)
+
+    user = _get_user_from_uid(uid)
     valid_token = account_activation_token.check_token(user, token)
 
     if user is not None and valid_token:
@@ -151,3 +139,14 @@ def _get_user_from_uid(uidb64):
         return user
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         return None
+
+
+def _parse_url_token(url_token):
+    """Given activation token from url, parse into expected components."""
+    match = re.fullmatch(
+        '^([0-9A-Za-z_\-]+)/([0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
+        url_token
+    )
+    if match:
+        return match.group(1), match.group(2)
+    return None, None

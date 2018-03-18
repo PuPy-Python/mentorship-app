@@ -16,7 +16,7 @@ class ProfileModelTestCase(TestCase):
         """Test saving a profile exercising fields."""
         fake_bio = "Live long and prosper."
         fake_linked_in_url = "www.linkedin.com/in/all_the_spam"
-        fake_repo_url = "www.github.com/bob"
+        fake_repo_url = "www.example.com/bob"
 
         profile = UserFactory.create().profile
         profile.bio = fake_bio
