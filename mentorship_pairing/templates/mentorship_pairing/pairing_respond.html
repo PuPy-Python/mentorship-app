@@ -1,0 +1,18 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+    <h3> {{ pairing_inst.requestor.user.username }} has requested to pair with you!</h3>
+    {% if pairing_inst.request_message %}
+        <p>Their message to you:</p>
+        <quote>{{ pairing_inst.request_message }}</quote>
+    {% endif %}
+    <p>Mentor: {{ pairing_inst.mentor.profile.user.username }}</p>
+    <p>Mentee: {{ pairing_inst.mentee.profile.user.username }}</p>
+    <form method=POST>
+        {% csrf_token %}
+        <select name="response">
+            <option value="{{accept_value}}">Accept</option>
+            <option value="{{reject_value}}">Reject</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

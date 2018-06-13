@@ -2,6 +2,7 @@
 import re
 
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404
@@ -9,16 +10,18 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_http_methods
 
 
 from .tokens import account_activation_token
 from .forms import (
     UserSignupForm,
+    UserModelForm,
     ProfileSignupForm,
     MenteeForm,
     MentorForm
 )
+# from .models import Profile
 
 ACCOUNT_TYPE_FORMS = {
     "mentor": MentorForm,
@@ -29,8 +32,8 @@ ACCOUNT_TYPE_FORMS = {
 def register_user_view(request, account_type):
     """User registration view.
 
-    param `user_type` is a string which determines which ('mentor' or 'mentee')
-    type of user to register.
+    param `account_type` is a string which determines which ('mentor' or
+    'mentee') type of user to register.
     """
     if not _is_valid_account_type(account_type):
         raise Http404("Page not found.")
@@ -150,3 +153,141 @@ def _parse_url_token(url_token):
     if match:
         return match.group(1), match.group(2)
     return None, None
+
+
+@login_required()
+@require_GET
+def profile_private_view(request):
+    """Display the user's private profile view.
+
+    GET: Render user's private profile view.
+    """
+
+    # TODO: return notifications and pairings
+
+    return render(
+        request,
+        'mentorship_profile/profile_private.html'
+    )
+
+
+@login_required()
+@require_http_methods(["GET", "POST"])
+def profile_edit_view(request):
+    """View to handle viewing and updating user's profile info.
+
+    GET: Render user, profile, and mentor/mentee forms.
+
+    POST:
+        Update user, profile, and mentor/mentee model information.
+        Redirect to 'private_profile' view.
+    """
+    if request.method == 'POST':
+        user_model_form = UserModelForm(
+            request.POST,
+            prefix="user",
+            instance=request.user
+        )
+        profile_model_form = ProfileSignupForm(
+            request.POST,
+            prefix="profile",
+            instance=request.user.profile
+        )
+        forms = [user_model_form, profile_model_form]
+
+        if request.user.profile.is_mentor():
+            mentor_form = MentorForm(
+                request.POST,
+                prefix="mentor",
+                instance=request.user.profile.mentor
+            )
+            forms.append(mentor_form)
+
+        if request.user.profile.is_mentee():
+            mentee_form = MenteeForm(
+                request.POST,
+                prefix="mentee",
+                instance=request.user.profile.mentee
+            )
+            forms.append(mentee_form)
+
+        forms_is_valid_list = []
+        for form in forms:
+            forms_is_valid_list.append(form.is_valid())
+
+        if all(forms_is_valid_list):
+            for form in forms:
+                form.save()
+            return redirect("private_profile")
+
+    elif request.method == 'GET':
+        forms = [
+            UserModelForm(
+                instance=request.user,
+                prefix="user"
+            ),
+            ProfileSignupForm(
+                instance=request.user.profile,
+                prefix="profile"
+            )
+        ]
+
+        if request.user.profile.is_mentor():
+            forms.append(
+                MentorForm(
+                    instance=request.user.profile.mentor,
+                    prefix="mentor"
+                )
+            )
+
+        if request.user.profile.is_mentee():
+            forms.append(
+                MenteeForm(
+                    instance=request.user.profile.mentee,
+                    prefix="mentee"
+                )
+            )
+
+    return render(
+        request,
+        'mentorship_profile/profile_edit.html',
+        {
+            "forms": forms
+        }
+    )
+
+
+@login_required
+@require_GET
+def profile_public_view(request, username):
+    """Given a username, display the publically available profile data.
+
+    GET:
+        Render public profile for <username>.
+        If is_paired_with_current_user(username), display contact info.
+    """
+    user = User.objects.filter(username=username).first()
+    if user:
+        return render(
+            request,
+            "mentorship_profile/profile_public.html",
+            {"user_instance": user}
+        )
+
+    raise Http404('User %s not found.' % username)
+
+
+@login_required
+@require_GET
+def mentor_list_view(request):
+    """List View for Mentors."""
+    # TODO: this view
+    pass
+
+
+@login_required
+@require_GET
+def mentee_list_view(request):
+    """List view for Mentees."""
+    # TODO: this view
+    pass

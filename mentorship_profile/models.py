@@ -1,5 +1,6 @@
 """Module defines the User profile for the PuPPy Mentorship application."""
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from django.db.models.signals import post_save
@@ -63,6 +64,22 @@ class Profile(models.Model):
 
     objects = models.Manager()
 
+    def is_mentor(self):
+        """Whether or not current user is a mentor."""
+        try:
+            self.mentor
+            return True
+        except ObjectDoesNotExist:
+            return False
+
+    def is_mentee(self):
+        """Whether or not current user is a mentee."""
+        try:
+            self.mentee
+            return True
+        except ObjectDoesNotExist:
+            return False
+
 
 @receiver(post_save, sender=User)
 def make_profile_for_user(sender, instance, **kwargs):
@@ -79,6 +96,16 @@ class ApprovedMentorsManager(models.Manager):
         """Overwrite to return only approved Mentors."""
         return super(ApprovedMentorsManager, self).get_queryset()\
             .filter(mentor_status="approved").all()
+
+
+class AvailableMentorsManager(models.Manager):
+    """Return the set of available Mentors."""
+
+    def get_queryset(self):
+        return super(AvailableMentorsManager, self).get_queryset()\
+            .filter(mentor_status="approved")\
+            .filter(currently_accepting_mentees=True)
+# TODO: Return Mentors who have less than max allowed mentees.
 
 
 class PendingMentorsManager(models.Manager):
@@ -118,6 +145,8 @@ class Mentor(models.Model):
     )
 
     approved_mentors = ApprovedMentorsManager()
+
+    available_mentors = AvailableMentorsManager()
 
     pending_mentors = PendingMentorsManager()
 

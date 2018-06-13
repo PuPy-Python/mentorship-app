@@ -1,0 +1,11 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+  <h2>Register</h2>
+  <form id="user_form" method="post">
+    {% csrf_token %}
+    {% for form in forms %}
+      {{ form.as_p }}
+    {% endfor %}
+    <button type="submit">Edit Profile</button>
+  </form>
+{% endblock %}

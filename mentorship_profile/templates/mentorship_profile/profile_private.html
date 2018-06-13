@@ -1,0 +1,7 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+    <h3>{{user.get_username}}'s Profile Page</h3>
+    <p>Bio: {{user.profile.bio}}</p>
+    <p>Email: {{user.email}}</p>
+{% endblock %}
+

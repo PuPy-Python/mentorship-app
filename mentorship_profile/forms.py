@@ -39,6 +39,41 @@ class UserSignupForm(UserCreationForm):
         )
 
 
+class UserModelForm(forms.ModelForm):
+    """UserModel Form for editing after sign up."""
+
+    username = forms.CharField(
+        required=True,
+        label="Username"
+    )
+
+    email = forms.CharField(
+        required=True,
+        label="Email",
+    )
+
+    first_name = forms.CharField(
+        required=False,
+        label="First Name",
+        help_text="Optional"
+    )
+
+    last_name = forms.CharField(
+        required=False,
+        label="Last Name",
+        help_text="Optional"
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+        )
+
+
 class ProfileSignupForm(forms.ModelForm):
     """Create a form for signing up a Profile Model."""
 
@@ -88,7 +123,11 @@ class MentorForm(forms.ModelForm):
 
     class Meta:
         model = Mentor
-        fields = ("area_of_expertise", "mentee_capacity",)
+        fields = (
+            "area_of_expertise",
+            "mentee_capacity",
+            "currently_accepting_mentees",
+        )
 
 
 class MenteeForm(forms.ModelForm):

@@ -28,3 +28,7 @@ class ProfileModelTestCase(TestCase):
         self.assertEqual(test_profile.bio, fake_bio)
         self.assertEqual(test_profile.linked_in_url, fake_linked_in_url)
         self.assertEqual(test_profile.projects_url, fake_repo_url)
+
+    # TODO: Test is_mentor convenience method
+    # def test_is_approved_mentor(self):
+    #     """Test the is_mentor convenience method on the profile model."""

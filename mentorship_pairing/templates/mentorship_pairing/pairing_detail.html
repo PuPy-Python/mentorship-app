@@ -1,0 +1,12 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+    <h3>Pairing</h3>
+    <b>Mentor:</b><p>{{pairing.mentor.profile.user.username}}</p>
+    {% if is_user_in_pairing %}
+        <p>Email: {{pairing.mentor.profile.user.email}}</p>
+    {% endif %}
+    <b>Mentee:</b><p>{{pairing.mentee.profile.user.username}}</p>
+    {% if is_user_in_pairing %}
+        <p>Email: {{pairing.mentee.profile.user.email}}</p>
+    {% endif %}
+{% endblock %}
