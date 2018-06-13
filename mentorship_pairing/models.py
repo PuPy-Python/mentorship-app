@@ -1,7 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
-from mentorship_profile.models import (Mentee, Mentor)
+from mentorship_profile.models import (Mentee, Mentor, Profile)
 
 
 # TODO: Different reasons for Mentor/Mentee?
@@ -46,7 +47,7 @@ class Pairing(models.Model):
     STATUS_CHOICES = (
         ("pending", "Pending"),
         ("active", "Active"),
-        # TODO: Just Delete?
+        ("rejected", "Rejected"),
         ("discontinued", "Discontinued")
     )
 
@@ -62,7 +63,15 @@ class Pairing(models.Model):
         on_delete=models.CASCADE
     )
 
+    requested_by = models.ForeignKey(
+        Profile,
+        related_name="requested_pairing",
+        null=True,
+        blank=True
+    )
+
     status = models.CharField(
+        choices=STATUS_CHOICES,
         max_length=40,
         blank=False,
         null=False,
@@ -80,3 +89,41 @@ class Pairing(models.Model):
     date_modified = models.DateTimeField(
         auto_now=True
     )
+
+    active_pairings = ActivePairingsManager()
+
+    pending_pairings = PendingPairingsManager()
+
+    objects = models.Manager()
+
+    def save(self, *args, **kwargs):
+        """
+        Overwrite save method.
+
+        We want to prevent saving a Pairing if a mentor and mentee are the same
+        user.
+        """
+
+        if self.mentor.profile is self.mentee.profile:
+            raise ValidationError("Mentor and Mentee cannot be same user.")
+        else:
+            super(Pairing, self).save(*args, **kwargs)
+
+    def is_user_in_pairing(self, user):
+        """Return whether or not the given user is in the pairing."""
+        return user in (self.mentor.profile.user, self.mentee.profile.user)
+
+    @property
+    def requestor(self):
+        """Return the profile that initiated this pairing."""
+        return self.requested_by
+
+    @property
+    def requestee(self):
+        """Return the profile that is requested to join this pairing."""
+        if self.requested_by is None:
+            # We don't know, return None
+            return None
+        elif self.requested_by is self.mentee.profile:
+            return self.mentor.profile
+        return self.mentee.profile

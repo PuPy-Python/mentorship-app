@@ -1,0 +1,11 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+<h3>Are you sure you would like to discontinue this pairing?</h3>
+    <p>Mentor: {{ pairing_inst.mentor.profile.user.username }}</p>
+    <p>Mentee: {{ pairing_inst.mentee.profile.user.username }}</p>
+    <form method=POST>
+        {% csrf_token %}
+        <input type="checkbox" name="discontinue" value="True"> Discontinue this pairing.<br>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

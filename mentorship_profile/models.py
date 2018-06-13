@@ -1,5 +1,6 @@
 """Module defines the User profile for the PuPPy Mentorship application."""
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from django.db.models.signals import post_save
@@ -62,6 +63,22 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
 
     objects = models.Manager()
+
+    def is_mentor(self):
+        """Whether or not current user is a mentor."""
+        try:
+            self.mentor
+            return True
+        except ObjectDoesNotExist:
+            return False
+
+    def is_mentee(self):
+        """Whether or not current user is a mentee."""
+        try:
+            self.mentee
+            return True
+        except ObjectDoesNotExist:
+            return False
 
 
 @receiver(post_save, sender=User)
@@ -128,6 +145,8 @@ class Mentor(models.Model):
     )
 
     approved_mentors = ApprovedMentorsManager()
+
+    available_mentors = AvailableMentorsManager()
 
     pending_mentors = PendingMentorsManager()
 

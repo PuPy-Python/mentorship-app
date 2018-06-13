@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mentorship',
-    'mentorship_profile'
+    'mentorship_profile',
+    'mentorship_pairing',
+    'mentorship_notification'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,4 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/login/'

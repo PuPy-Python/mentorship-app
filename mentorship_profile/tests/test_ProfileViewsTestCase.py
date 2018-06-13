@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 
-from .test_utilities import UserFactory
+from .test_utilities import UserFactory, DEFAULT_TEST_USER_PASSWORD
 from ..models import Mentor, Mentee
 from ..tokens import account_activation_token
 from ..views import _send_registration_email, _get_user_from_uid
@@ -261,6 +261,14 @@ class ProfileViewTestCase(TestCase):
             res2.content
         )
 
+        self.assertTrue(
+            user.profile.is_mentee()
+        )
+
+        self.assertFalse(
+            user.profile.is_mentor()
+        )
+
     def test_post_invalid_data_register_mentee_view(self):
         """Test post invalid user data with register_user_view for a mentee."""
         invalid_mentee_data = {
@@ -302,3 +310,236 @@ class ProfileViewTestCase(TestCase):
         for url in invalid_urls:
             res = self.client.get(url)
             self.assertEqual(res.status_code, 404)
+
+    def test_get_profile_no_user_404(self):
+        """Test that without a user, redirects to login."""
+        res = self.client.get(reverse('private_profile'), follow=True)
+        self.assertEqual(
+            res.templates[0].name,
+            'registration/login.html'
+        )
+
+    def test_user_not_logged_in_cannot_access(self):
+        """Test that with a user, but not logged in, redirects to login."""
+        UserFactory.create()
+        res = self.client.get(reverse('private_profile'), follow=True)
+        self.assertEqual(200, res.status_code)
+        self.assertEqual(
+            res.templates[0].name,
+            'registration/login.html'
+        )
+
+    def login_test_user(self):
+        """Login a test user."""
+        self.user = User.objects.create_user(
+            'test_user',
+            'test_user@example.com',
+            'testpassword'
+        )
+        self.user.profile.bio = "A simple bio."
+        self.user.profile.save()
+        self.user.save()
+        self.client.force_login(self.user)
+        return self.user
+
+    def test_get_profile_private_view(self):
+        """Test the correct profile is rendered."""
+        self.login_test_user()
+        res = self.client.get('/profile/', follow=True)
+        self.assertEqual(200, res.status_code)
+        self.assertEqual(
+            'mentorship_profile/profile_private.html',
+            res.templates[0].name
+        )
+
+    def test_only_get_profile_private_view(self):
+        """Test that only GET requests are allowed for profile_private_view."""
+        self.login_test_user()
+        method_calls = [
+            self.client.post,
+            self.client.patch,
+            self.client.put,
+            self.client.options,
+            self.client.delete
+        ]
+        for method in method_calls:
+            res = method('/profile/')
+            self.assertEqual(405, res.status_code)
+
+    def test_get_profile_edit_view(self):
+        """Test GET for profile_edit_view renders correct forms."""
+        user = self.login_test_user()
+        res = self.client.get('/profile/edit/')
+
+        # We can verify that the correct forms rendered by checking for the
+        # formatted prefix of each form type.
+        self.assertContains(res, "name=\"user-")
+        self.assertContains(res, "name=\"profile-")
+        self.assertNotContains(res, "name=\"mentor-")
+        self.assertNotContains(res, "name=\"mentee-")
+
+        # Now make the current user a mentor, that form should render.
+        Mentor(profile=self.user.profile).save()
+        self.assertTrue(self.user.profile.is_mentor())
+        res2 = self.client.get('/profile/edit/')
+        self.assertContains(res2, "name=\"user-")
+        self.assertContains(res2, "name=\"profile-")
+        self.assertContains(res2, "name=\"mentor-")
+        self.assertNotContains(res2, "name=\"mentee-")
+
+        # Now make the current user a mentee, that form should render.
+        Mentee(profile=self.user.profile).save()
+        self.assertTrue(self.user.profile.is_mentee())
+        res2 = self.client.get('/profile/edit/')
+        self.assertContains(res2, "name=\"user-")
+        self.assertContains(res2, "name=\"profile-")
+        self.assertContains(res2, "name=\"mentor-")
+        self.assertContains(res2, "name=\"mentee-")
+
+    def test_valid_post_profile_edit_view(self):
+        """Test that valid data submitted via POST updates user models."""
+        user = self.login_test_user()
+        test_bio = "This is my bio."
+        user.profile.bio = test_bio
+        user.profile.save()
+        test_goals = "Learn all the things."
+        Mentee(
+            profile=user.profile,
+            goals=test_goals
+        ).save()
+        test_area_of_expertise = "web full stack"
+        Mentor(
+            profile=user.profile,
+            area_of_expertise=test_area_of_expertise
+        ).save()
+        get_res = self.client.get('/profile/edit/')
+        self.assertContains(get_res, test_goals)
+        self.assertContains(get_res, test_bio)
+        self.assertContains(get_res, test_area_of_expertise)
+
+        new_test_bio = "Learn some other things."
+        test_email = "test_user@example.com"
+        test_area_of_interest = "data science"
+        test_capacity = 4
+        post_params = {
+            "user-username": user.username,
+            "user-email": test_email,
+            "profile-bio": new_test_bio,
+            "mentee-area_of_interest": test_area_of_interest,
+            "mentee-goals": test_goals,
+            "mentor-mentee_capacity": test_capacity,
+            "mentor-area_of_expertise": test_area_of_expertise
+        }
+
+        post_res = self.client.post('/profile/edit/', post_params, follow=True)
+        self.assertEqual(post_res.status_code, 200)
+        self.assertContains(post_res, new_test_bio)
+
+        updated_user = User.objects.get(pk=user.pk)
+        self.assertEqual(updated_user.email, test_email)
+        self.assertEqual(updated_user.profile.bio, new_test_bio)
+        self.assertEqual(
+            updated_user.profile.mentee.area_of_interest,
+            test_area_of_interest
+        )
+        self.assertEqual(
+            updated_user.profile.mentor.mentee_capacity,
+            test_capacity
+        )
+        self.assertEqual(
+            updated_user.profile.mentor.area_of_expertise,
+            test_area_of_expertise
+        )
+
+    def test_invalid_post_profile_edit_view(self):
+        """Test that invalid data will not be submitted."""
+        user = self.login_test_user()
+        user.username = "test_user"
+        user.email = "test_user@example.com"
+        user.save()
+        test_bio = "This is my bio."
+        user.profile.bio = test_bio
+        user.profile.save()
+        Mentor(
+            profile=user.profile,
+            area_of_expertise="web full stack"
+        ).save()
+
+        post_params = {
+            "user-username": "test_user",
+            "user-email": "test_user@example.com",
+            "profile-bio": test_bio,
+            "mentor-area_of_expertise": "corporate taxes",
+            "mentor-mentee_capacity": 4,
+            "mentor-currently_accepting_mentees": True,
+        }
+        res = self.client.post("/profile/edit/", post_params)
+        self.assertEqual(
+            'mentorship_profile/profile_edit.html',
+            res.templates[0].name
+        )
+        self.assertContains(
+            res,
+            "Select a valid choice. corporate taxes is not " +
+            "one of the available choices."
+        )
+
+    def test_get_own_public_profile_view(self):
+        """Test that GET for user's own public page.
+
+        SHOULD:
+            render user's public profile page, without private information
+        """
+        user = self.login_test_user()
+        url = "/profile/%s/" % user.username
+
+        res = self.client.get(url)
+        self.assertEqual(
+            'mentorship_profile/profile_public.html',
+            res.templates[0].name
+        )
+        # Contact info is not publicly available
+        self.assertNotContains(res, user.email)
+
+    def test_get_public_profile_view(self):
+        """Test that get return's correct info for a different user."""
+        user = self.login_test_user()
+        new_user = User.objects.create_user(
+            'new_test_user',
+            'new_test_user@example.com',
+            'newtestpassword'
+        )
+        new_user.profile.bio = "A new simple bio."
+        new_user.profile.save()
+        new_user.save()
+
+        res = self.client.get('/profile/new_test_user/')
+        self.assertEquals(
+            'mentorship_profile/profile_public.html',
+            res.templates[0].name
+        )
+        self.assertContains(res, new_user.username)
+        self.assertContains(res, new_user.profile.bio)
+
+    def test_get_no_user_returns_404_public_profile(self):
+        """Test that a 404 is received for a user that doesn't exist."""
+        self.login_test_user()
+        res = self.client.get('/profile/barry_white/')
+
+        self.assertEquals(res.status_code, 404)
+        # TODO: Create custom 404 response and test for custom response.
+
+    def test_only_get_public_profile(self):
+        """Test that GET is the only valid method for profile_public_view."""
+        self.login_test_user()
+        method_calls = [
+            self.client.post,
+            self.client.patch,
+            self.client.put,
+            self.client.options,
+            self.client.delete
+        ]
+        url = '/profile/' + self.user.username + '/'
+        for method in method_calls:
+            res = method(url)
+            self.assertEqual(405, res.status_code)

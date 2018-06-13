@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from mentorship_profile import views as profile_views
+from mentorship_pairing import views as pairing_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -37,8 +38,15 @@ urlpatterns = [
         ),
         name="activate_notification"
     ),
-    url(r'^profile/$', profile_views.users_profile_view, name="profile"),
-    url(r'^profile/edit/$', profile_views.users_edit_profile_view, name="edit_profile"),
-    url(r'^profile/(?P<username>[\w.@+-]+)/$', profile_views.user_public_profile_view, name="user_profile")
-    url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$')
+    url(r'^mentors/$', profile_views.mentor_list_view, name="mentors"),
+    url(r'^mentees/$', profile_views.mentee_list_view, name="mentees"),
+    url(r'^profile/$', profile_views.profile_private_view, name="private_profile"),
+    url(r'^profile/edit/$', profile_views.profile_edit_view, name="edit_profile"),
+    url(r'^profile/(?P<username>[\w.@+-]+)/$', profile_views.profile_public_view, name="public_profile"),
+    url(r'^pairing/(?P<pairing_id>[0-9]+)/$', pairing_views.pairing_detail_view, name="pairing_detail"),
+    url(r'^pairing/(?P<pairing_id>[0-9]+)/respond/$', pairing_views.pairing_respond_view, name="pairing_respond"),
+    url(r'^pairing/(?P<pairing_id>[0-9]+)/discontinue/$', pairing_views.pairing_discontinue_view, name="pairing_discontinue"),
+    url(r'^pairing/(?P<pairing_id>[0-9]+)/accepted/$', pairing_views.pairing_accepted_view, name="pairing_accepted"),
+    url(r'^pairing/(?P<pairing_id>[0-9]+)/rejected/$', pairing_views.pairing_rejected_view, name="pairing_rejected"),
+    url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$', pairing_views.pairing_request_view, name="pairing_request"),
 ]

@@ -2,6 +2,7 @@
 include = 
 	mentorship/*
 	mentorship_profile/*
+	mentorship_pairing/*
 
 [report]
 omit = 
@@ -11,3 +12,4 @@ omit =
 	*/__init__.py
 	*/tests.py
 	*/tests/*
+	*/apps.py

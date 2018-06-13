@@ -1,22 +1,20 @@
 from django import forms
-from .mentorship_profile.models import Mentor, Mentee
-from .mentorship_pairing.models import Pairing
+from mentorship_profile.models import Mentor, Mentee
+from mentorship_pairing.models import Pairing
 
 
-# class RequestPairingForm(forms.ModelForm):
+class PairingRequestForm(forms.ModelForm):
+    """Form for requesting a Pairing."""
 
-#     mentor = forms.ModelChoiceField(
-#         queryset=Mentor.objects.all()
-#     )
+    request_message = forms.CharField(
+        widget=forms.Textarea,
+        required=False,
+        label="Request Message",
+        help_text="Write a brief message to introduce yourself."
+    )
 
-#     mentee = forms.ModelChoiceField(
-#         queryset=Mentee.objects.all()
-#     )
-
-#     class Meta:
-#         model = Pairing
-#         fields = (
-#             "mentor",
-#             "mentee",
-#             "request_message"
-#         )
+    class Meta:
+        model = Pairing
+        fields = (
+            "request_message",
+        )

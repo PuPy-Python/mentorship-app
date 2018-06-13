@@ -1,0 +1,5 @@
+{% extends 'mentorship/base.html' %}
+{% block body %}
+    <p>Thank you, we'll notify {{ pairing_inst.requestee.user.username }}.</p>
+    <a href={% url 'private_profile' %}>Return to your profile</a>
+{% endblock %}
