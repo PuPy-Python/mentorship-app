@@ -1,10 +1,12 @@
 {% extends 'mentorship/base.html' %}
 
 {% block body %}
+<div class="container">
   <h2>Login</h2>
   <form id="user_form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
   </form>
+</div>
 {% endblock %}
