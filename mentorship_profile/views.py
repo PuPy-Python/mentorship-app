@@ -37,6 +37,14 @@ def show_homepage_view(request):
     return render(request, "mentorship/homepage.html")
 
 
+def show_CoC_view(request):
+    """Code of conduct view.
+
+    Display the code of conduct page."""
+
+    return render(request, "mentorship/conduct.html")
+
+
 def register_user_view(request, account_type):
     """User registration view.
 
