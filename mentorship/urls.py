@@ -23,6 +23,7 @@ from mentorship_pairing import views as pairing_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('django.contrib.auth.urls')),
+    url(r'', profile_views.show_homepage_view, name="home"),
     url(
         r'^activate_account/(?P<url_token>[0-9A-Za-z/_\-]+)/$',
         profile_views.activate_account_view, name='activate_account'

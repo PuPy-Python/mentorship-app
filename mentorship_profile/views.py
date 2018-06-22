@@ -29,6 +29,14 @@ ACCOUNT_TYPE_FORMS = {
 }
 
 
+def show_homepage_view(request):
+    """Homepage view.
+
+    Display the homepage template for PuPPy Mentorship."""
+
+    return render(request, "mentorship/homepage.html")
+
+
 def register_user_view(request, account_type):
     """User registration view.
 
