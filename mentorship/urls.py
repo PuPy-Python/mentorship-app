@@ -29,7 +29,7 @@ urlpatterns = [
     ),
     url(
         r'^signup/(?P<account_type>[\w-]+)/',
-        profile_views.register_user_view
+        profile_views.register_user_view, name="signup"
     ),
     url(
         r'^activate/',
