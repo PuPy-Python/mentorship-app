@@ -1,6 +1,7 @@
 {% extends 'mentorship/base.html' %}
 
 {% block body %}
+<div class="container">
   <h2>Register</h2>
   <form id="user_form" method="post">
     {% csrf_token %}
@@ -9,4 +10,6 @@
     {{ account_type_form.as_p }}
     <button type="submit">Register</button>
   </form>
+  <br>
+</div>
 {% endblock %}
