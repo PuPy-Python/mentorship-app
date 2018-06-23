@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('django.contrib.auth.urls')),
     url(r'^$', general_views.show_homepage_view, name="home"),
-    url(r'^conduct', general_views.show_CoC_view, name="conduct"),
+    url(r'^conduct/', general_views.show_CoC_view, name="conduct"),
     url(
         r'^activate_account/(?P<url_token>[0-9A-Za-z/_\-]+)/$',
         profile_views.activate_account_view, name='activate_account'
