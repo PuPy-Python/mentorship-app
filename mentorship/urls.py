@@ -17,19 +17,22 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+from . import views as general_views
 from mentorship_profile import views as profile_views
 from mentorship_pairing import views as pairing_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('django.contrib.auth.urls')),
+    url(r'^$', general_views.show_homepage_view, name="home"),
+    url(r'^conduct/', general_views.show_CoC_view, name="conduct"),
     url(
         r'^activate_account/(?P<url_token>[0-9A-Za-z/_\-]+)/$',
         profile_views.activate_account_view, name='activate_account'
     ),
     url(
         r'^signup/(?P<account_type>[\w-]+)/',
-        profile_views.register_user_view
+        profile_views.register_user_view, name="signup"
     ),
     url(
         r'^activate/',
