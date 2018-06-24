@@ -35,3 +35,24 @@ To run the tests, run `make test` (no pipenv). This will run `pytest` with
 coverage, including all tests written in typical Django style, as well as all
 other tests. For info on writing pytest-style Django tests, see
 https://pytest-django.readthedocs.io/en/latest/tutorial.html .
+
+## Development
+
+### Depenedencies
+
+Developing on this application requries the follow:
+
+*  Python 3
+*  pipenv (https://docs.pipenv.org/)
+*  Postgres (https://postgresapp.com/)
+
+### Environment
+
+Required variables:
+*  DATABASE_USER
+*  DATABASE_URL
+*  DATABASE_NAME
+*  DATABASE_PASSWORD
+*  TEST_DATABASE_NAME
+*  EMAIL_HOST_PASSWORD
+*  APP_ENV="DEV"

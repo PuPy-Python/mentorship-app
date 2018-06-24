@@ -79,8 +79,15 @@ WSGI_APPLICATION = 'mentorship.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME','puppy_mentors'),
+        'USER': os.environ.get('DATABASE_USER',''),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
+        'HOST': os.environ.get('DATABASE_URL', '127.0.0.1'),
+        'PORT': '5432',
+        'TEST': {
+            'NAME': os.environ.get('TEST_DATABASE_NAME', 'test_puppy_mentors')
+        }
     }
 }
 
@@ -125,6 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 if os.environ.get("ENV", "") == "PROD":

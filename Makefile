@@ -10,3 +10,12 @@ ci:
 
 coverage:
 	pipenv run coveralls
+
+run:
+	pipenv run ./manage.py runserver
+
+makemigrations:
+	pipenv run ./manage.py makemigrations
+
+migrate:
+	pipenv run ./manage.py migrate

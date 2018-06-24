@@ -19,6 +19,8 @@ pylint = "*"
 [packages]
 
 django = "<2.0,>1.11"
+"psycopg2" = "*"
+gunicorn = "*"
 
 
 [requires]
