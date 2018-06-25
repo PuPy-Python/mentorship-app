@@ -7,6 +7,7 @@ script:
 after_success:
 - make coverage
 deploy:
+  provider: heroku
   api_key:
     secure: $TRAVIS_CI_HEROKU_TOKEN
   app:
