@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@cqf&lvv(#i=%k4w8z-l72y)#99)*rg1=&mk%-47-^9r%r*zhf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = []
 
@@ -79,8 +80,15 @@ WSGI_APPLICATION = 'mentorship.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME','puppy_mentors'),
+        'USER': os.environ.get('DATABASE_USER',''),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
+        'HOST': os.environ.get('DATABASE_URL', '127.0.0.1'),
+        'PORT': '5432',
+        'TEST': {
+            'NAME': os.environ.get('TEST_DATABASE_NAME', 'test_puppy_mentors')
+        }
     }
 }
 
@@ -125,7 +133,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+os.makedirs(STATIC_TMP, exist_ok=True)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 if os.environ.get("ENV", "") == "PROD":
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -139,3 +153,5 @@ else:
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = '/login/'
+
+django_heroku.settings(locals())
