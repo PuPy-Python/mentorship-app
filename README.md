@@ -56,3 +56,4 @@ Required variables:
 *  TEST_DATABASE_NAME
 *  EMAIL_HOST_PASSWORD
 *  APP_ENV="DEV"
+*  DEBUG
