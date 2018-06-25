@@ -11,17 +11,16 @@ pytest-django = "*"
 pytest-cov = "*"
 "pytest-pep8" = "*"
 coveralls = "*"
-factory-boy = "*"
+factory_boy = "*"
 coverage = "*"
 pylint = "*"
 
 
 [packages]
 
-django = "<2.0,>1.11"
+Django = "<2.0,>1.11"
 "psycopg2" = "*"
 gunicorn = "*"
-django-heroku = "*"
 
 
 [requires]
