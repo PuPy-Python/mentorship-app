@@ -40,7 +40,7 @@ https://pytest-django.readthedocs.io/en/latest/tutorial.html .
 
 ### Depenedencies
 
-Developing on this application requries the follow:
+Developing on this application requires the following:
 
 *  Python 3
 *  pipenv (https://docs.pipenv.org/)
