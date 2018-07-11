@@ -5,7 +5,7 @@ How to setup the application and instructions for common development tasks such 
 ## Setup
 How to setup this application for development.
 
-### Depenedencies
+### Dependencies
 Developing on this application requires the following:
 
 *  Python 3
@@ -46,15 +46,15 @@ Once all dependencies are installed and the repository is cloned, perform the fo
         `createdb test_mentorship`
 
     2. Create a `.env` file in the project root and populate it with the following variables:
-        *  DATABASE_USER                # Your computer username by default
+        *  DATABASE_USER                         # Your computer username by default
         *  DATABASE_URL=127.0.0.1
-        *  DATABASE_NAME                # e.g. 'puppy_mentors'
-        *  DATABASE_PASSWORD            # If you set up a password for your local DB
-        *  TEST_DATABASE_NAME           # e.g. 'test_puppy_mentors'
-        *  EMAIL_HOST_PASSWORD          # Ask a Contributor
+        *  DATABASE_NAME="mentorship"
+        *  DATABASE_PASSWORD                     # If you set up a password for your local DB
+        *  TEST_DATABASE_NAME="test_mentorship"
+        *  EMAIL_HOST_PASSWORD                   # Ask a Contributor
         *  APP_ENV="DEV"
         *  DEBUG="True"
-        *  SECRET_KEY                   # Something secret.
+        *  SECRET_KEY                            # Something secret.
 
     3. Install the application using make command:
         `make init`
