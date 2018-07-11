@@ -9,7 +9,7 @@ Following are expectations for developers contributing to this repo.
 2. Push all feature branches to your personal repo
 3. All feature branches must be rebased from upstream/master before PR
     To keep rebasing your work:
-    `git pull --rebsae prod master`
+    `git pull --rebase prod master`
 4. All PR's should be atomic (1 commit) for ease of reversion/rollback
 5. PR's must be approved by a developer before merge
 6. PR's must pass automated tests.
@@ -40,3 +40,12 @@ A successful deployment is dependent on three things:
 
 TODO: Need public feedback for successful deploy
 TODO: How to Rollback
+
+## Getting Started with git
+1. Fork the project repository to create a personal working repo
+2. Clone your fork `git clone <your-fork>`
+3. Set the project repository as upstream, and rename it `git remote add upstream <production-repo>` and `git remote rename upstream prod`
+4. Set rename your fork `git remote rename origin <your-name>`
+5. Check the remote repository names `git remote -v` should have 4 lines
+
+
