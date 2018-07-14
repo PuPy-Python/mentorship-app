@@ -1,11 +1,8 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
-
 [dev-packages]
-
 pytest = "*"
 pytest-django = "*"
 pytest-cov = "*"
@@ -15,15 +12,12 @@ factory-boy = "*"
 coverage = "*"
 pylint = "*"
 
-
 [packages]
-
 django = "<2.0,>1.11"
 "psycopg2" = "*"
 gunicorn = "*"
 django-heroku = "*"
-
+whitenoise = "*"
 
 [requires]
-
 python_version = "3.6"

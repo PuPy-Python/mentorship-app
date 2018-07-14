@@ -1,5 +1,5 @@
 # Contributing
-Guidelines and expecations for contributing to this open source project.
+Guidelines and expectations for contributing to this open source project.
 
 
 ## Git Hygiene
@@ -12,7 +12,7 @@ Following are expectations for developers contributing to this repo.
     `git pull --rebase prod master`
 4. All PR's should be atomic (1 commit) for ease of reversion/rollback
 5. PR's must be approved by a developer before merge
-6. PR's must pass automated tests.
+6. PR's must pass automated tests
 
 How to squash commits:
 
@@ -47,5 +47,3 @@ TODO: How to Rollback
 3. Set the project repository as upstream, and rename it `git remote add upstream <production-repo>` and `git remote rename upstream prod`
 4. Set rename your fork `git remote rename origin <your-name>`
 5. Check the remote repository names `git remote -v` should have 4 lines
-
-
