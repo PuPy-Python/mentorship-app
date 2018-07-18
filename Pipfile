@@ -18,6 +18,7 @@ django = "<2.0,>1.11"
 gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.6"
