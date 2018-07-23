@@ -1,1 +1,2 @@
-web: gunicorn mentorship.wsgi
+release: python manage.py migrate
+web: gunicorn mentorship.wsgi --log-file -

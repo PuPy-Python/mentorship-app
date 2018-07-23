@@ -8,15 +8,17 @@ How to setup this application for development.
 ### Dependencies
 Developing on this application requires the following:
 
-*  Python 3
+*  Python 3 (https://www.python.org/)
 *  pipenv (https://docs.pipenv.org/)
 *  Postgres (https://postgresapp.com/)
 *  make (https://www.gnu.org/software/make/)
+*  Node (https://nodejs.org/)
+*  Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 #### Basic Pipenv Usage
 
 Make sure you have pipenv. A large number of pipenv installation options
-are covered in the documentation at https://docs.pipenv.org .
+are covered in the documentation at https://docs.pipenv.org.
 
 After you clone the project, run `pipenv install --dev`. This will install
 all the project dependencies in a virtualenv that pipenv manages. To run
@@ -59,8 +61,20 @@ Once all dependencies are installed and the repository is cloned, perform the fo
     3. Install the application using make command:
         `make init`
 
-    4. Start the application using make command:
+    4. Install the dependencies and build the React app:
+        `yarn`
+        `yarn build`
+
+    5. Start the application using make command:
         `make run`
+
+    6. View the app in your web browser. Default address is `http://localhost:8000/`.
+
+    7. If you are working on the React app and you want the benefits of auto-refreshing:
+        * Open up a new terminal
+        * Navigate back to the root directory of this project
+        * Run `yarn start`
+        * View the app in your web browser. Default address is `http://localhost:3000/`
 
 ### Basic Commands
 This project uses a Makefile to abstract most of the common commands for development.  Examples below:
@@ -75,12 +89,16 @@ This project uses a Makefile to abstract most of the common commands for develop
 
 ## Testing
 
+### Django
 To run the tests, run `make test` (no pipenv). This will run `pytest` with
 coverage, including all tests written in typical Django style, as well as all
 other tests. For info on writing pytest-style Django tests, see
 https://pytest-django.readthedocs.io/en/latest/tutorial.html .
 
 When adding a new Django "Application" in order to run the tests from that application, it must be added to the command like so: `--cov=mentorship_newapp`
+
+### React
+Run `yarn test`. By default, it runs in watch mode. As you make file changes, the tests related to those files will be run. To get code coverage, run `yarn test --coverage`.
 
 ## Resources
 This application uses React, Django, and Django Rest Framework.  Their documentation is below:
