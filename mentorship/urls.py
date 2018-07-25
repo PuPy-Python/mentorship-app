@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 from . import views as general_views
 from mentorship_profile import views as profile_views
 from mentorship_pairing import views as pairing_views
+from mentorship_api import views as api_views
 
 urlpatterns = [
     url(r'^hello/', TemplateView.as_view(template_name='index.html')),
@@ -53,4 +54,6 @@ urlpatterns = [
     url(r'^pairing/(?P<pairing_id>[0-9]+)/accepted/$', pairing_views.pairing_accepted_view, name="pairing_accepted"),
     url(r'^pairing/(?P<pairing_id>[0-9]+)/rejected/$', pairing_views.pairing_rejected_view, name="pairing_rejected"),
     url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$', pairing_views.pairing_request_view, name="pairing_request"),
+    url(r'^api/v1/helloworld/$', api_views.hello_world, name="hello_world_api"),  # this route returns a message of Hello World!
+    url(r'^api/v1/', include('rest_framework.urls'), name="rest_api"),  # API login and logout
 ]
