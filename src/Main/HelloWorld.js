@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
-
-const __API_HOST__ = process.env.REACT_APP_API_HOST || 'http://localhost:8000';
+import Constants from '../constants';
 
 class HelloWorld extends Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
-    }
+    };
   }
 
   componentDidMount() {
-    superagent
-    .get(`${__API_HOST__}/api/v1/helloworld/`)
-    .end( (err, res) => {
-      let message = res.body['message'];
+    superagent.get(`${Constants.API_URL}/helloworld`).end((err, res) => {
       this.setState({
-        message:message
+        message: res.body['message'],
       });
     });
   }
@@ -25,9 +21,7 @@ class HelloWorld extends Component {
   render() {
     return (
       <div className="HelloWorld">
-        <p>
-          {this.state.message}
-        </p>
+        <p>{this.state.message}</p>
       </div>
     );
   }
