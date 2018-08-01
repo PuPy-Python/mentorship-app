@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
-import Constants from '../constants';
+import { HELLO_WORLD_URL } from '../constants';
 
 class HelloWorld extends Component {
   constructor(props) {
@@ -9,9 +9,10 @@ class HelloWorld extends Component {
       message: '',
     };
   }
-
+  // TODO: Revisit extracting this method out of the class for testing purposes
+  // per conversation on PR#46
   componentDidMount() {
-    superagent.get(`${Constants.API_URL}/helloworld`).end((err, res) => {
+    superagent.get(HELLO_WORLD_URL).end((err, res) => {
       this.setState({
         message: res.body['message'],
       });
