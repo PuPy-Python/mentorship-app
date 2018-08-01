@@ -57,6 +57,7 @@ class Profile(models.Model):
     )
 
     bio = models.TextField(
+        max_length=500,
         blank=False
     )
 
