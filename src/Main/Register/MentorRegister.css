@@ -1,0 +1,74 @@
+/* label{
+  font-family:"Verdana",Geneva,sans-serif;
+  color:#1729CB;
+}
+
+h1{
+  font-family:"Comic Sans MS",cursive,sans-serif;
+  color:#113AB0;
+}
+
+input{
+  font-family:"Verdana",Geneva,sans-serif;
+  height:25px;
+  border-radius:3px;
+  width: 100%;
+
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+
+}
+input:focus{
+  background-color:lightblue;
+}
+section{
+  font-size:;
+}
+
+#pinfo{
+  border-radius: 5px;
+  background-color:#f2f2f2;
+  padding:20px;
+  border-width: 1px;
+  width: 45%;
+  float:left;
+  color:black;
+}
+
+#xinfo{
+  display:inline-block;
+  border-radius: 5px;
+  border-padding:20px;
+  background-color:#f2f2f2;
+  padding:20px;
+  border-width: 1px;
+  width: 45%;
+
+  color:black;
+}
+#interests{
+  padding:10px;
+  display:block;
+  border-radius: 5px;
+  border-padding:20px;
+  background-color:#f2f2f2;
+  padding:20px;
+  border-width: 1px;
+  width: 45%;
+  color:black;
+}
+#bio{
+  padding: 10px 10px 100px 5px;
+  word-wrap: break-word;
+
+
+}
+#submitButton{
+  background-color:red;
+  width: 50%;
+}
+
+#num{
+ width:40px;
+} */
