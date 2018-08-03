@@ -260,4 +260,4 @@ class MentorRegister extends React.Component {
 
 
 }
-export default Register;
+export default MentorRegister;
