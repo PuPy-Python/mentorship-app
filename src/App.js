@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Main from './Main/Main';
-import Header from './Main/Header'
+import Header from './Main/Header';
+import { connect } from 'react-redux';
+import {echo} from './Main/actions/echo';
+import {serverMessage} from './Main/reducers';
 
 class App extends Component {
+  
+  componentDidMount() {
+    this.props.fetchMessage('Hi!')
+}
+
   render() {
     return (
       <BrowserRouter>
@@ -16,4 +24,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  state => ({ message: serverMessage(state) }),
+  { fetchMessage: echo }
+)(App);

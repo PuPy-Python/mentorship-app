@@ -1,37 +1,33 @@
-export const loadUser = () => {
-  return (dispatch, getState) => {
-    dispatch({type: "USER_LOADING"});
+import { RSAA } from 'redux-api-middleware';
 
-    const token = getState().auth.token;
+export const LOGIN_REQUEST = '@@jwt/LOGIN_REQUEST';
+export const LOGIN_SUCCESS = '@@jwt/LOGIN_SUCCESS';
+export const LOGIN_FAILURE = '@@jwt/LOGIN_FAILURE';
 
-    let headers = {
-      "Content-Type": "application/json",
-    };
+export const TOKEN_REQUEST = '@@jwt/TOKEN_REQUEST';
+export const TOKEN_RECEIVED = '@@jwt/TOKEN_RECEIVED';
+export const TOKEN_FAILURE = '@@jwt/TOKEN_FAILURE';
 
-    if (token) {
-      headers["Authorization"] = `Token ${token}`;
+export const login = (username, password) => ({
+    [RSAA]: {
+        endpoint: '/api/v1/login/',
+        method: 'POST',
+        body: JSON.stringify({username, password}),
+        headers: { 'Content-Type': 'application/json' },
+        types: [
+            LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE
+        ]
+      }
+})
+
+export const refreshAccessToken = (token) => ({
+    [RSAA]: {
+        endpoint: '/api/v1/token/refresh/',
+        method: 'POST',
+        body: JSON.stringify({refresh: token}),
+        headers: { 'Content-Type': 'application/json' },
+        types: [
+          TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE
+        ]
     }
-    return fetch("api/v1/login/", {headers, })
-      .then(res => {
-        // if (res.status < 500) {
-        //   return res.json().then(data => {
-        //     return {status: res.status, data};
-        //   })
-        // } else {
-        //   console.log("Server Error!");
-        //   throw res;
-        // }
-        console.log(res)
-      })
-      .then(res => {
-        // if (res.status === 200) {
-        //   dispatch({type: 'USER_LOADED', user: res.data });
-        //   return res.data;
-        // } else if (res.status >= 400 && res.status < 500) {
-        //   dispatch({type: "AUTHENTICATION_ERROR", data: res.data});
-        //   throw res.data;
-        // }
-        console.log('yes almost there')
-      })
-  }
-}
+})
