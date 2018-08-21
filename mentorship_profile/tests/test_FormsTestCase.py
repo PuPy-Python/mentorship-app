@@ -79,7 +79,7 @@ class FormsTestCase(TestCase):
         """Test all fields of a valid mentor form."""
         valid_mentor_data = {
             "mentee_capacity": 2,
-            "area_of_expertise": "backend devops"
+            "areas_of_interest": ["career_growth"]
         }
 
         test_form = MentorForm(valid_mentor_data)
@@ -98,7 +98,7 @@ class FormsTestCase(TestCase):
         # We've created errors in the following fields, check for them:
         # - mentee_capacity
         # - area_of_expertise
-        error_fields = ["mentee_capacity", "area_of_expertise"]
+        error_fields = ["mentee_capacity", "areas_of_interest"]
         for error in error_fields:
             self.assertTrue(error in test_form.errors)
 

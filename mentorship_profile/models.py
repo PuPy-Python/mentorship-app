@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from multiselectfield import MultiSelectField
+
 CATEGORIES = (
     ("data science", "Data Science"),
     ("backend devops", "Back End / DevOps"),
@@ -129,6 +131,15 @@ class Mentor(models.Model):
 
     DEFAULT_MENTEE_CAPACITY = 5
 
+    AREAS_OF_INTEREST = (
+        ('portfolio_code_review', 'Portfolio / Code Reviews'),
+        ('job_search_interviews', 'Job Search and Interviews'),
+        ('industry_trends', 'Industry Trends, Skills, Technologies'),
+        ('leadership_management', 'Leadership / Management'),
+        ('business_entrepreneurship', 'Business, Entrepreneurship'),
+        ('career_growth', 'Career Growth'),
+    )
+
     profile = models.OneToOneField(
         Profile
     )
@@ -139,8 +150,8 @@ class Mentor(models.Model):
         max_length=30
     )
 
-    area_of_expertise = models.CharField(
-        choices=CATEGORIES,
+    areas_of_interest = MultiSelectField(
+        choices=AREAS_OF_INTEREST,
         max_length=30,
         default="unknown"
     )
