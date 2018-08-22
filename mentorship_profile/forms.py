@@ -110,6 +110,7 @@ class ProfileSignupForm(forms.ModelForm):
             "linked_in_url",
             "projects_url",
             "bio",
+            "years_industry_experience",
         )
 
 

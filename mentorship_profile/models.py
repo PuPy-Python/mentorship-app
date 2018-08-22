@@ -15,6 +15,13 @@ CATEGORIES = (
     ("unknown", "Unknown")
 )
 
+YEARS = (
+    ("0", "0"),
+    ("1-2", "1 - 2"),
+    ("3-6", "3 - 6"),
+    ("7+", "7 +")
+)
+
 
 class Profile(models.Model):
     """Definition of a user profile for the PuPPy Mentorship application."""
@@ -61,6 +68,12 @@ class Profile(models.Model):
     bio = models.TextField(
         max_length=500,
         blank=False
+    )
+
+    years_industry_experience = models.CharField(
+        choices=YEARS,
+        max_length=3,
+        default="0"
     )
 
     email_confirmed = models.BooleanField(default=False)
@@ -145,9 +158,9 @@ class Mentor(models.Model):
     )
 
     mentor_status = models.CharField(
-        default="unapproved",
         choices=MENTOR_STATUS_CHOICES,
-        max_length=30
+        max_length=30,
+        default="unapproved"
     )
 
     areas_of_interest = MultiSelectField(
