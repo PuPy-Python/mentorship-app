@@ -1,4 +1,3 @@
-
 import re
 
 from django.contrib.auth import login
@@ -52,10 +51,18 @@ def register_user_view(request, account_type):
             account_type_form.is_valid()
         ):
 
-            user = user_model_form.save(commit=False)
-            user.profile = profile_form.save(commit=False)
-            user.save()
-            user.profile.save()
+            user = user_model_form.save()
+
+            # TODO: Decide whether we would like to continue to parse one form
+            # to build user and profile models. If so, recommend removing post-
+            # save receiver for user profile in .models.
+
+            profile_form = ProfileSignupForm(
+                request.POST,
+                prefix="profile",
+                instance=user.profile
+            )
+            profile_form.save()
 
             account_type_instance = account_type_form.save(commit=False)
             account_type_instance.profile = user.profile

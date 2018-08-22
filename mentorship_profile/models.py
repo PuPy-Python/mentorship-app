@@ -165,7 +165,7 @@ class Mentor(models.Model):
 
     areas_of_interest = MultiSelectField(
         choices=AREAS_OF_INTEREST,
-        max_length=30,
+        max_length=130,
         default="unknown"
     )
 
