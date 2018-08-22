@@ -19,6 +19,7 @@ gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
 djangorestframework = "*"
+django-multiselectfield = "*"
 
 [requires]
 python_version = "3.6"

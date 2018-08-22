@@ -19,7 +19,7 @@ class MentorTestCase(TestCase):
         """Test default values for newly created mentor."""
         new_mentor = self.create_mentor()
 
-        self.assertEqual(new_mentor.area_of_expertise, "unknown")
+        self.assertEqual(new_mentor.areas_of_interest, "unknown")
         self.assertEqual(
             new_mentor.mentee_capacity,
             Mentor.DEFAULT_MENTEE_CAPACITY

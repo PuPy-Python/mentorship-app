@@ -112,6 +112,7 @@ db.sqlite3
 
 # testing
 /coverage
+.pytest_cache/
 
 # production
 /build

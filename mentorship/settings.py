@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mentorship_pairing',
     'mentorship_notification',
     'rest_framework',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
