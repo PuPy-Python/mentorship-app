@@ -37,7 +37,7 @@
     "lint": "eslint ./src --max-warnings 0"
   },
   "engines": {
-    "node": "8.9.4",
+    "node": ">8.9.4",
     "npm": "5.6.0"
   },
   "jest": {
