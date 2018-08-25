@@ -6,11 +6,20 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from multiselectfield import MultiSelectField
+
 CATEGORIES = (
     ("data science", "Data Science"),
     ("backend devops", "Back End / DevOps"),
     ("web full stack", "Web / Full Stack Development"),
     ("unknown", "Unknown")
+)
+
+YEARS = (
+    ("0", "0"),
+    ("1-2", "1 - 2"),
+    ("3-6", "3 - 6"),
+    ("7+", "7 +")
 )
 
 
@@ -57,7 +66,14 @@ class Profile(models.Model):
     )
 
     bio = models.TextField(
+        max_length=500,
         blank=False
+    )
+
+    years_industry_experience = models.CharField(
+        choices=YEARS,
+        max_length=3,
+        default="0"
     )
 
     email_confirmed = models.BooleanField(default=False)
@@ -128,18 +144,27 @@ class Mentor(models.Model):
 
     DEFAULT_MENTEE_CAPACITY = 5
 
+    AREAS_OF_INTEREST = (
+        ('portfolio_code_review', 'Portfolio / Code Reviews'),
+        ('job_search_interviews', 'Job Search and Interviews'),
+        ('industry_trends', 'Industry Trends, Skills, Technologies'),
+        ('leadership_management', 'Leadership / Management'),
+        ('business_entrepreneurship', 'Business, Entrepreneurship'),
+        ('career_growth', 'Career Growth'),
+    )
+
     profile = models.OneToOneField(
         Profile
     )
 
     mentor_status = models.CharField(
-        default="unapproved",
         choices=MENTOR_STATUS_CHOICES,
-        max_length=30
+        max_length=30,
+        default="unapproved"
     )
 
-    area_of_expertise = models.CharField(
-        choices=CATEGORIES,
+    areas_of_interest = MultiSelectField(
+        choices=AREAS_OF_INTEREST,
         max_length=30,
         default="unknown"
     )

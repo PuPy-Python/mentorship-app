@@ -110,6 +110,7 @@ class ProfileSignupForm(forms.ModelForm):
             "linked_in_url",
             "projects_url",
             "bio",
+            "years_industry_experience",
         )
 
 
@@ -124,7 +125,7 @@ class MentorForm(forms.ModelForm):
     class Meta:
         model = Mentor
         fields = (
-            "area_of_expertise",
+            "areas_of_interest",
             "mentee_capacity",
             "currently_accepting_mentees",
         )

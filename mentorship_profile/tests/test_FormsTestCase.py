@@ -51,7 +51,8 @@ class FormsTestCase(TestCase):
             "slack_handle": "freddie",
             "linked_in_url": "www.example.com",
             "repo_url": "www.example.com",
-            "bio": "Very personal info very required."
+            "bio": "Very personal info very required.",
+            "years_industry_experience": "1-2",
         }
 
         test_form = ProfileSignupForm(valid_profile_data)
@@ -63,6 +64,7 @@ class FormsTestCase(TestCase):
             "slack_handle": "freddie",
             "linked_in_url": "weeee",
             "repo_url": "www.example.com",
+            "years_industry_experience": "X",
         }
 
         test_form = ProfileSignupForm(invalid_profile_data)
@@ -71,7 +73,8 @@ class FormsTestCase(TestCase):
         # We've created errors in the following fields, check for them:
         # - linked_in_url,
         # - bio
-        error_fields = ["linked_in_url", "bio"]
+        # - years_industry_experience
+        error_fields = ["linked_in_url", "bio", "years_industry_experience"]
         for error in error_fields:
             self.assertTrue(error in test_form.errors)
 
@@ -79,7 +82,7 @@ class FormsTestCase(TestCase):
         """Test all fields of a valid mentor form."""
         valid_mentor_data = {
             "mentee_capacity": 2,
-            "area_of_expertise": "backend devops"
+            "areas_of_interest": ["career_growth"]
         }
 
         test_form = MentorForm(valid_mentor_data)
@@ -89,7 +92,7 @@ class FormsTestCase(TestCase):
         """Test some form validation."""
         invalid_mentor_data = {
             "mentee_capacity": 8,
-            "area_of_expertise": "life, the universe, and everything"
+            "area_of_expertise": "life, the universe, and everything",
         }
 
         test_form = MentorForm(invalid_mentor_data)
@@ -98,7 +101,7 @@ class FormsTestCase(TestCase):
         # We've created errors in the following fields, check for them:
         # - mentee_capacity
         # - area_of_expertise
-        error_fields = ["mentee_capacity", "area_of_expertise"]
+        error_fields = ["mentee_capacity", "areas_of_interest"]
         for error in error_fields:
             self.assertTrue(error in test_form.errors)
 
@@ -106,7 +109,7 @@ class FormsTestCase(TestCase):
         """Test all fields of a valid mentor form."""
         valid_mentee_data = {
             "goals": "Some meaningful goals.",
-            "area_of_interest": "backend devops"
+            "area_of_interest": "backend devops",
         }
 
         test_form = MenteeForm(valid_mentee_data)
@@ -115,7 +118,7 @@ class FormsTestCase(TestCase):
     def test_invalid_mentee_form(self):
         """Test some form validation."""
         invalid_mentee_data = {
-            "area_of_interest": "life, the universe, and everything"
+            "area_of_interest": "life, the universe, and everything",
         }
 
         test_form = MenteeForm(invalid_mentee_data)

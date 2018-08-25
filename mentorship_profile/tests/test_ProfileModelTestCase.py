@@ -17,17 +17,21 @@ class ProfileModelTestCase(TestCase):
         fake_bio = "Live long and prosper."
         fake_linked_in_url = "www.linkedin.com/in/all_the_spam"
         fake_repo_url = "www.example.com/bob"
+        fake_years_industry_experience = "0"
 
         profile = UserFactory.create().profile
         profile.bio = fake_bio
         profile.linked_in_url = fake_linked_in_url
         profile.projects_url = fake_repo_url
+        profile.years_industry_experience = fake_years_industry_experience
         profile.save()
 
         test_profile = Profile.objects.first()
         self.assertEqual(test_profile.bio, fake_bio)
         self.assertEqual(test_profile.linked_in_url, fake_linked_in_url)
         self.assertEqual(test_profile.projects_url, fake_repo_url)
+        self.assertEqual(test_profile.years_industry_experience,
+                         fake_years_industry_experience)
 
     # TODO: Test is_mentor convenience method
     # def test_is_approved_mentor(self):
