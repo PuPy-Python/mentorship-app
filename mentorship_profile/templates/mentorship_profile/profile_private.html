@@ -1,7 +1,41 @@
 {% extends 'mentorship/base.html' %}
 {% block body %}
-    <h3>{{user.get_username}}'s Profile Page</h3>
-    <p>Bio: {{user.profile.bio}}</p>
-    <p>Email: {{user.email}}</p>
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-9" style="margin: 0 auto;" >
+                <div class="row" style="margin-bottom: 1rem;" >
+                    <div class="col-md-3" style="text-align: center;" >
+                        <img src="https://www.gravatar.com/avatar/{{hashed_email}}"
+                            style="border-radius: 10rem"  />
+                    </div>
+                    <div class="col-md-6" style="text-align: center;" >
+                        <h3>
+                            {{user.get_full_name}}
+                        </h3>
+                    </div>
+                    <div class="col-md-3" >
+                    </div>
+                </div>
+                <div class="row" style="background-color: #fff; border-radius: 1rem; margin-bottom: 1rem;" >
+                    <div class="col-md-3" >
+                        <p><b>Bio</b></p>
+                        <p>{{user.profile.bio}}</p>
+                    </div>
+                    <div class="col-md-3" >
+                    </div>
+                </div>
+                <div class="row" style="background-color: #fff; border-radius: 1rem; margin-bottom: 1rem;">
+                    <div class="col" >
+                        <p>
+                            Email: {{user.email}}
+                        </p>
+                        <p>
+                            Username: {{user.get_username}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>
 {% endblock %}
 

@@ -1,4 +1,5 @@
 
+import hashlib
 import re
 
 from django.contrib.auth import login
@@ -164,10 +165,13 @@ def profile_private_view(request):
     """
 
     # TODO: return notifications and pairings
+    email = request.user.email;
+    hashed_email = hashlib.md5(email.encode("utf-8")).hexdigest();
 
     return render(
         request,
-        'mentorship_profile/profile_private.html'
+        'mentorship_profile/profile_private.html',
+        {"hashed_email": hashed_email}
     )
 
 
