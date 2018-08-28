@@ -20,6 +20,7 @@ django-heroku = "*"
 whitenoise = "*"
 djangorestframework = "*"
 django-multiselectfield = "*"
+djangorestframework-jwt = "*"
 
 [requires]
 python_version = "3.6"

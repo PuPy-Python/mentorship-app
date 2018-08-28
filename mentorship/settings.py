@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mentorship_pairing',
     'mentorship_notification',
     'rest_framework',
+    'rest_framework_jwt',
     'multiselectfield',
 ]
 
@@ -80,6 +81,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mentorship.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
