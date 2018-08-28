@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from . import views as general_views
 from mentorship_profile import views as profile_views
@@ -55,6 +56,7 @@ urlpatterns = [
     url(r'^pairing/(?P<pairing_id>[0-9]+)/rejected/$', pairing_views.pairing_rejected_view, name="pairing_rejected"),
     url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$', pairing_views.pairing_request_view, name="pairing_request"),
     url(r'^api/v1/helloworld/$', api_views.hello_world, name="hello_world_api"),  # this route returns a message of Hello World!
-    url(r'^api/v1/login/$', api_views.login, name="login_api"),
+    url(r'^api/v1/token-auth/$', obtain_jwt_token, name="token_auth_api"),
+    url(r'^api/v1/token-refresh/$', refresh_jwt_token, name="token_refresh_api"),
     url(r'^api/v1/', include('rest_framework.urls'), name="rest_api"),  # API login and logout
 ]
