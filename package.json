@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-data-query": "^1.4.1",
+    "@progress/kendo-dropdowns-react-wrapper": "^2018.2.719",
+    "@progress/kendo-react-dropdowns": "^1.2.0",
+    "@progress/kendo-react-intl": "^1.2.0",
+    "@progress/kendo-ui": "^2018.2.822",
+    "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",
