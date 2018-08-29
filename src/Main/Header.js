@@ -16,8 +16,4 @@ class Header extends Component{
         }
 }
 
-<<<<<<< HEAD
-export default Header
-=======
-export default Header
->>>>>>> feature/register
+export default Header;
