@@ -3,6 +3,7 @@ include =
 	mentorship/*
 	mentorship_profile/*
 	mentorship_pairing/*
+	mentorship_api/*
 
 [report]
 omit = 

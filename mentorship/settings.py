@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mentorship_profile',
     'mentorship_pairing',
     'mentorship_notification',
+    'mentorship_api',
     'rest_framework',
     'rest_framework_jwt',
     'multiselectfield',
