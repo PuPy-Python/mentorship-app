@@ -1,5 +1,5 @@
 import storage from 'redux-persist/es/storage';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import { createFilter } from 'redux-persist-transform-filter';
 import { persistReducer, persistStore } from 'redux-persist';
 import { routerMiddleware } from 'react-router-redux';
@@ -20,7 +20,13 @@ export default history => {
     rootReducer
   );
 
-  const store = createStore(reducer, {}, applyMiddleware(apiMiddleware, routerMiddleware(history)));
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+  const store = createStore(
+    reducer,
+    {},
+    composeEnhancers(applyMiddleware(apiMiddleware, routerMiddleware(history)))
+  );
 
   persistStore(store);
 

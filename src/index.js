@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
-import PrivateRoute from './Main/containers/PrivateRoute';
 import Login from './Main/containers/Login';
 import configureStore from './store';
 import registerServiceWorker from './registerServiceWorker';
@@ -20,7 +19,7 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
         <Route exact path="/login/" component={Login} />
-        <PrivateRoute path="/" component={App} />
+        <Route path="/" component={App} />
       </Switch>
     </Router>
   </Provider>,
