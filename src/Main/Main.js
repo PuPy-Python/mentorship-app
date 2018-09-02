@@ -10,7 +10,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/hello" component={Home} />
           <Route path="/hello/helloworld" component={HelloWorld} />
-          <Route path ='/Register/Register' component={Register}/>
+          <Route path="/Register/Register" component={Register} />
           <Redirect to="/hello" />
         </Switch>
       </div>

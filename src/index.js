@@ -11,21 +11,20 @@ import Login from './Main/containers/Login';
 import configureStore from './store';
 import registerServiceWorker from './registerServiceWorker';
 
+const history = createHistory();
 
-const history = createHistory()
+const store = configureStore(history);
 
-const store = configureStore(history)
-
-ReactDOM.render((
-    <Provider store={store}>
+ReactDOM.render(
+  <Provider store={store}>
     <Router history={history}>
-    <Switch>
+      <Switch>
         <Route exact path="/login/" component={Login} />
-        <PrivateRoute path="/" component={App}/>
-    </Switch>
+        <PrivateRoute path="/" component={App} />
+      </Switch>
     </Router>
-    </Provider>
-  ), document.getElementById('root'));
- 
- 
-  registerServiceWorker();
+  </Provider>,
+  document.getElementById('root')
+);
+
+registerServiceWorker();
