@@ -8,10 +8,13 @@ class Header extends Component {
         <nav>
           <ul>
             <li>
-              <Link to="/hello"> Hello Home</Link>
+              <Link to="/hello">Hello Home</Link>
             </li>
             <li>
-              <Link to="/Register/Register"> Register</Link>
+              <Link to="/Registration/Mentor">Mentor Registration</Link>
+            </li>
+            <li>
+              <Link to="/Registration/Mentee">Mentee Registration</Link>
             </li>
           </ul>
         </nav>

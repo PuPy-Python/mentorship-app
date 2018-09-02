@@ -11,32 +11,30 @@ export const checkNormalSymbolsOnly = value => {
 };
 
 export const checkTooLong = (value, length) => {
-  if (value) {
-    if (value.length > length) {
-      return `Must be ${length} characters or less`;
-    }
+  if (value && value.length > length) {
+    return `Must be ${length} characters or less`;
   }
 };
 
 export const checkTooShort = (value, length) => {
-  if (value) {
-    if (value.length < length) {
-      return `Must be ${length} characters or more`;
-    }
+  if (value && value.length < length) {
+    return `Must be ${length} characters or more`;
   }
 };
 
 export const checkUrl = value => {
-  const test = /^(http:\/\/|https:\/\/)[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?([^\s]+)?$/.test(
-    value
-  );
-  if (!test) {
+  if (
+    value &&
+    !/^(http:\/\/|https:\/\/)[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?([^\s]+)?$/.test(
+      value
+    )
+  ) {
     return 'Must be a valid URL';
   }
 };
 
 export const checkEmail = value => {
-  if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(value)) {
+  if (value && !/^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(value)) {
     return 'Must be a valid email';
   }
 };

@@ -25,11 +25,11 @@ const interests = [
   { label: 'Career Growth', value: 'careerGrowth' },
 ];
 
-const MentorRegister = ({ handleSubmit, classes }) => {
+const Registration = ({ handleSubmit, classes, isMentor }) => {
   return (
     <div className={classes.form}>
-      <h1>Mentor Registration</h1>
-      <form onSubmit={handleSubmit(() => {})} noValidate>
+      <h1>{(isMentor ? 'Mentor' : 'Mentee') + ' Registration'}</h1>
+      <form onSubmit={handleSubmit} noValidate>
         <label htmlFor="pinfo">Personal Information</label>
         <section id="pinfo" name="personalinfo">
           <Field name="firstname" label="First Name" component={TextField} />
@@ -52,12 +52,14 @@ const MentorRegister = ({ handleSubmit, classes }) => {
           <Field name="slackHandle" label="Slack Handle" component={TextField} />
           <Field name="linkedinURL" label="Linkedin URL" component={TextField} />
           <Field name="codeRepoURL" label="Code Repository URL" component={TextField} />
-          <Field
-            name="menteeCapacity"
-            label="Mentee Capacity"
-            type="number"
-            component={TextField}
-          />
+          {isMentor && (
+            <Field
+              name="menteeCapacity"
+              label="Mentee Capacity"
+              type="number"
+              component={TextField}
+            />
+          )}
         </section>
         <br />
         <label htmlFor="interests">Areas of interest</label>
@@ -79,4 +81,4 @@ const MentorRegister = ({ handleSubmit, classes }) => {
   );
 };
 
-export default withStyles(styles, { name: 'MentorRegister' })(MentorRegister);
+export default withStyles(styles, { name: 'Registration' })(Registration);

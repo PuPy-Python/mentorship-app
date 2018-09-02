@@ -36,7 +36,8 @@ export default ({
   username: checkRequired(username) || checkTooLong(username, MAX_USERNAME_LENGTH),
   email: checkRequired(email) || checkEmail(email) || checkTooLong(email, MAX_EMAIL_LENGTH),
   password: checkRequired(password) || checkTooShort(password, MIN_PASSWORD_LENGTH),
-  confirmPassword: checkRequired(confirmPassword) || checkPasswordsMatching(confirmPassword, password),
+  confirmPassword:
+    checkRequired(confirmPassword) || checkPasswordsMatching(confirmPassword, password),
   bio: checkTooLong(bio, MAX_BIO_LENGTH),
   slackHandle: checkTooLong(slackHandle, MAX_SLACK_HANDLE_LENGTH),
   linkedinURL: checkTooLong(linkedinURL, MAX_LINKEDIN_URL_LENGTH) || checkUrl(linkedinURL),
