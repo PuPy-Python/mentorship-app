@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { echo } from './Main/actions/echo';
 import { serverMessage } from './Main/reducers';
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     this.props.fetchMessage('Hi!');
   }

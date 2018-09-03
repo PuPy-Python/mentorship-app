@@ -17,7 +17,7 @@ export const checkTooLong = (value, length) => {
 };
 
 export const checkTooShort = (value, length) => {
-  if (value && value.length < length) {
+  if (!value || value.length < length) {
     return `Must be ${length} characters or more`;
   }
 };
