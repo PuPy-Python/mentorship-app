@@ -9,28 +9,24 @@ export const TOKEN_RECEIVED = '@@jwt/TOKEN_RECEIVED';
 export const TOKEN_FAILURE = '@@jwt/TOKEN_FAILURE';
 
 export const login = (username, password) => ({
-    [RSAA]: {
-        endpoint: '/api/v1/token-auth/',
-        method: 'POST',
-        body: JSON.stringify({
-          'username': username,
-          'password': password
-        }),
-        headers: { 'Content-Type': 'application/json' },
-        types: [
-            LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE
-        ]
-      }
-})
+  [RSAA]: {
+    endpoint: '/api/v1/token-auth/',
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+    types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+  },
+});
 
-export const refreshAccessToken = (token) => ({
-    [RSAA]: {
-        endpoint: '/api/v1/token-refresh/',
-        method: 'POST',
-        body: JSON.stringify({'token': token}),
-        headers: { 'Content-Type': 'application/json' },
-        types: [
-          TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE
-        ]
-    }
-})
+export const refreshAccessToken = token => ({
+  [RSAA]: {
+    endpoint: '/api/v1/token-refresh/',
+    method: 'POST',
+    body: JSON.stringify({ token: token }),
+    headers: { 'Content-Type': 'application/json' },
+    types: [TOKEN_REQUEST, TOKEN_RECEIVED, TOKEN_FAILURE],
+  },
+});
