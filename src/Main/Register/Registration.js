@@ -25,7 +25,7 @@ const interests = [
   { label: 'Career Growth', value: 'careerGrowth' },
 ];
 
-const Registration = ({ handleSubmit, classes, isMentor }) => {
+export const Registration = ({ handleSubmit, classes, isMentor }) => {
   return (
     <div className={classes.form}>
       <h1>{(isMentor ? 'Mentor' : 'Mentee') + ' Registration'}</h1>
