@@ -17,7 +17,7 @@ class ProfileModelTestCase(TestCase):
         fake_bio = "Live long and prosper."
         fake_linked_in_url = "www.linkedin.com/in/all_the_spam"
         fake_repo_url = "www.example.com/bob"
-        fake_years_industry_experience = "0"
+        fake_years_industry_experience = "0-1"
 
         profile = UserFactory.create().profile
         profile.bio = fake_bio

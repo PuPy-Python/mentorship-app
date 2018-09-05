@@ -11,6 +11,7 @@ coveralls = "*"
 factory-boy = "*"
 coverage = "*"
 pylint = "*"
+djangorestframework-jwt = "*"
 
 [packages]
 django = "<2.0,>1.11"
