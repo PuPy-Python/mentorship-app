@@ -35,10 +35,10 @@ class GetProfile(APITestCase):
         response = self.client.get(url)
         data = response.json()
         self.assertTrue(data)
-        self.assertEqual(data["username"], self.user.username)
-        self.assertEqual(data["first_name"], self.user.first_name)
-        self.assertEqual(data["last_name"], self.user.last_name)
-        self.assertEqual(data["email"], self.user.email)
+        self.assertEqual(data["user"]["username"], self.user.username)
+        self.assertEqual(data["user"]["first_name"], self.user.first_name)
+        self.assertEqual(data["user"]["last_name"], self.user.last_name)
+        self.assertEqual(data["user"]["email"], self.user.email)
 
         self.assertTrue(data["profile"])
         self.assertEqual(data["profile"]["id"], self.user.profile.id)
@@ -71,10 +71,10 @@ class GetProfile(APITestCase):
         response = self.client.get(url)
         data = response.json()
         self.assertTrue(data)
-        self.assertEqual(data["username"], self.user.username)
-        self.assertEqual(data["first_name"], self.user.first_name)
-        self.assertEqual(data["last_name"], self.user.last_name)
-        self.assertEqual(data["email"], self.user.email)
+        self.assertEqual(data["user"]["username"], self.user.username)
+        self.assertEqual(data["user"]["first_name"], self.user.first_name)
+        self.assertEqual(data["user"]["last_name"], self.user.last_name)
+        self.assertEqual(data["user"]["email"], self.user.email)
 
         self.assertTrue(data["profile"])
         self.assertEqual(data["profile"]["id"], self.user.profile.id)
@@ -88,19 +88,19 @@ class GetProfile(APITestCase):
         self.assertEqual(data["profile"]["years_industry_experience"],
                          self.user.profile.years_industry_experience)
 
-        self.assertTrue(data["profile"]["mentor"])
-        self.assertEqual(data["profile"]["mentor"]["mentor_status"],
+        self.assertTrue(data["mentor"])
+        self.assertEqual(data["mentor"]["mentor_status"],
                          self.user.profile.mentor.mentor_status)
-        self.assertEqual(data["profile"]["mentor"]["areas_of_interest"],
+        self.assertEqual(data["mentor"]["areas_of_interest"],
                          self.user.profile.mentor.areas_of_interest)
-        self.assertEqual(data["profile"]["mentor"]["mentee_capacity"],
+        self.assertEqual(data["mentor"]["mentee_capacity"],
                          self.user.profile.mentor.mentee_capacity)
         self.assertEqual(
-                data["profile"]["mentor"]["currently_accepting_mentees"],
+                data["mentor"]["currently_accepting_mentees"],
                 self.user.profile.mentor.currently_accepting_mentees)
 
-        self.assertTrue(data["profile"]["mentee"])
-        self.assertEqual(data["profile"]["mentee"]["area_of_interest"],
+        self.assertTrue(data["mentee"])
+        self.assertEqual(data["mentee"]["area_of_interest"],
                          self.user.profile.mentee.area_of_interest)
-        self.assertEqual(data["profile"]["mentee"]["goals"],
+        self.assertEqual(data["mentee"]["goals"],
                          self.user.profile.mentee.goals)
