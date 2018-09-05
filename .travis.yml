@@ -1,8 +1,24 @@
-language: python
-python:
-- '3.6'
-install: make
-script:
-- make ci
-after_success:
-- make coverage
+matrix:
+  include:
+    - language: python
+      python:
+        - '3.6'
+      install: make
+      script:
+        - make ci
+      after_success:
+        - make coverage
+    - language: node_js
+      node_js: 
+        - '8.9.4'
+      sudo: false
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install: yarn
+      cache:
+        yarn: true
+        directories:
+          - 'node_modules'
+      script:
+        - yarn run test
