@@ -16,9 +16,9 @@ CATEGORIES = (
 )
 
 YEARS = (
-    ("0", "0"),
-    ("1-2", "1 - 2"),
-    ("3-6", "3 - 6"),
+    ("0-1", "0 - 1"),
+    ("1-3", "1 - 3"),
+    ("3-7", "3 - 7"),
     ("7+", "7 +")
 )
 
@@ -73,7 +73,7 @@ class Profile(models.Model):
     years_industry_experience = models.CharField(
         choices=YEARS,
         max_length=3,
-        default="0"
+        default="0-1"
     )
 
     email_confirmed = models.BooleanField(default=False)

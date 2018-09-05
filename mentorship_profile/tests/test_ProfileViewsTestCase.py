@@ -136,7 +136,7 @@ class ProfileViewTestCase(TestCase):
             "user-password2": "supersecret",
             "profile-bio": "Very personal information.",
             "mentor-areas_of_interest": "career_growth",
-            "profile-years_industry_experience": "1-2",
+            "profile-years_industry_experience": "1-3",
             "mentor-mentee_capacity": "2",
         }
         res = self.client.post(
@@ -185,7 +185,7 @@ class ProfileViewTestCase(TestCase):
             "user-password2": "supersecretLOL",
             "profile-bio": "Very personal information.",
             "mentor-areas_of_interest": "backend devops",
-            "profile-years_industry_experience": "1-2",
+            "profile-years_industry_experience": "1-3",
             "mentor-mentee_capacity": "2",
         }
         res = self.client.post(
@@ -223,7 +223,7 @@ class ProfileViewTestCase(TestCase):
             "user-password1": "supersecret",
             "user-password2": "supersecret",
             "profile-bio": "Very personal information.",
-            "profile-years_industry_experience": "0",
+            "profile-years_industry_experience": "0-1",
             "mentee-area_of_interest": "backend devops",
             "mentee-goals": "Accomplish all the things!",
         }
@@ -280,7 +280,7 @@ class ProfileViewTestCase(TestCase):
             "user-password1": "supersecret",
             "user-password2": "supersecretLOL",
             "profile-bio": "Very personal information.",
-            "profile-years_industry_experience": "0",
+            "profile-years_industry_experience": "0-1",
             "mentee-area_of_interest": "backend devops",
             "mentee-goals": "Accomplish all the things!",
         }
@@ -405,7 +405,7 @@ class ProfileViewTestCase(TestCase):
         user = self.login_test_user()
         test_bio = "This is my bio."
         user.profile.bio = test_bio
-        user.profile.years_industry_experience = "0"
+        user.profile.years_industry_experience = "0-1"
         user.profile.save()
         test_goals = "Learn all the things."
         Mentee(
@@ -423,7 +423,7 @@ class ProfileViewTestCase(TestCase):
         self.assertContains(get_res, test_mentor_areas_of_interest[0])
 
         new_test_bio = "Learn some other things."
-        test_years = "1-2"
+        test_years = "1-3"
         test_email = "test_user@example.com"
         test_area_of_interest = "data science"
         test_capacity = 4
@@ -477,7 +477,7 @@ class ProfileViewTestCase(TestCase):
             "user-email": "test_user@example.com",
             "profile-bio": test_bio,
             "mentor-areas_of_interest": ["corporate taxes"],
-            "profile-years_industry_experience": "1-2",
+            "profile-years_industry_experience": "1-3",
             "mentor-mentee_capacity": 4,
             "mentor-currently_accepting_mentees": True,
         }

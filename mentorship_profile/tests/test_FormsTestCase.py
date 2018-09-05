@@ -52,7 +52,7 @@ class FormsTestCase(TestCase):
             "linked_in_url": "www.example.com",
             "repo_url": "www.example.com",
             "bio": "Very personal info very required.",
-            "years_industry_experience": "1-2",
+            "years_industry_experience": "1-3",
         }
 
         test_form = ProfileSignupForm(valid_profile_data)
