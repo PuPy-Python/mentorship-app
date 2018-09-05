@@ -9,7 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-build/
 develop-eggs/
 dist/
 downloads/
@@ -114,9 +113,6 @@ db.sqlite3
 /coverage
 .pytest_cache/
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local
@@ -130,3 +126,9 @@ yarn-error.log*
 
 staticfiles/*
 !staticfiles/.gitkeep
+
+build/*
+!build/.gitkeep
+build/static/*
+!build/static
+!build/static/.gitkeep
