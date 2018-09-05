@@ -21,20 +21,13 @@ class MenteeSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    mentor = MentorSerializer()
-    mentee = MenteeSerializer()
-
     class Meta:
         model = Profile
         fields = ("id", "slack_handle", "linked_in_url", "projects_url", "bio",
-                  "years_industry_experience", "email_confirmed",
-                  "mentor", "mentee")
+                  "years_industry_experience", "email_confirmed")
 
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer()
-
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name",
-                  "profile")
+        fields = ("id", "username", "email", "first_name", "last_name")
