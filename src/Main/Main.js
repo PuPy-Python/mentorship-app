@@ -3,11 +3,12 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import Home from './Home/Home';
 import Registration from './Register/Registration';
 import Login from './containers/Login';
-import CodeOfConduct from './pages/CodeOfConduct'
+import CodeOfConduct from './pages/CodeOfConduct';
+import PublicProfileContainer from './Profile/PublicProfileContainer';
 
 class Main extends Component {
   render() {
-    document.title = "PuPPy Mentorship App";
+    document.title = 'PuPPy Mentorship App';
     return (
       <div className="Main">
         <Switch>
@@ -15,6 +16,7 @@ class Main extends Component {
           <Route path="/signup" component={Registration} />
           <Route path="/login" component={Login} />
           <Route path="/code-of-conduct" component={CodeOfConduct} />
+          <Route path="/Profile/:username?" component={PublicProfileContainer} />
           <Redirect to="/" />
         </Switch>
       </div>
