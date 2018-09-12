@@ -19,3 +19,12 @@ makemigrations:
 
 migrate:
 	pipenv run ./manage.py migrate
+
+# run commands after building image and mounting /app volume
+docker:
+	pip install pipenv
+	pipenv install --dev --ignore-pipfile
+	pipenv run ./manage.py makemigrations
+	yarn install
+	yarn start &
+	pipenv run ./manage.py runserver 0.0.0.0:8000
