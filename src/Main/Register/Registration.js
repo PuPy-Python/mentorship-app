@@ -25,6 +25,9 @@ const interests = [
   { label: 'Career Growth', value: 'careerGrowth' },
 ];
 
+const renderError = ({ meta: { touched, error } }) =>
+  touched && error ? <span>{error}</span> : false;
+
 export const Registration = ({ handleSubmit, classes, isMentor }) => {
   return (
     <div className={classes.form}>
@@ -49,6 +52,18 @@ export const Registration = ({ handleSubmit, classes, isMentor }) => {
         <label htmlFor="xinfo">Social Media & Info</label>
         <section id="xinfo">
           <Field name="bio" label="Bio" multiline rows="8" component={TextField} />
+          <Field name="goals" label="Goals" multiline rows="5" component={TextField}/>
+          <p>Years of Industry Experience</p>
+          <p></p>
+          <Field name="exp" id="0" component="input" type="radio" value="0" />
+          <label htmlFor="tester">{' '}0</label>&ensp;&ensp;&ensp;&ensp;&ensp;
+          <Field name="exp" id="2" component="input" type="radio" value="0-2" />
+          <label htmlFor="tester">{' '}0-2</label>&ensp;&ensp;&ensp;&ensp;&ensp;
+          <Field name="exp" id="3" component="input" type="radio" value="3-6" />
+          <label htmlFor="tester">{' '}3-6</label>&ensp;&ensp;&ensp;&ensp;&ensp;
+          <Field name="exp" id="7" component="input" type="radio" value="7+" />
+          <label htmlFor="tester">{' '}7+</label>&ensp;&ensp;&ensp;&ensp;&ensp;
+          <Field name="exp" component={renderError} />
           <Field name="slackHandle" label="Slack Handle" component={TextField} />
           <Field name="linkedinURL" label="Linkedin URL" component={TextField} />
           <Field name="codeRepoURL" label="Code Repository URL" component={TextField} />
@@ -62,7 +77,7 @@ export const Registration = ({ handleSubmit, classes, isMentor }) => {
           )}
         </section>
         <br />
-        <label htmlFor="interests">Areas of interest</label>
+        <label htmlFor="interests">Areas of {(isMentor ? 'Expertise' : 'Interests')}</label>
         <section id="interests">
           <Field
             name="interests"
