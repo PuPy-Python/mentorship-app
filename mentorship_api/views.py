@@ -1,5 +1,8 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
 
 from mentorship_profile.models import Profile, Mentor, Mentee
@@ -8,6 +11,8 @@ from mentorship_api.serializers import UserSerializer, ProfileSerializer, \
 
 
 class UserDetail(APIView):
+    permission_classes = (AllowAny,)
+
     def get(self, request, format=None):
         response = {}
 
@@ -30,3 +35,52 @@ class UserDetail(APIView):
             response["mentee"] = menteeSerializer.data
 
         return Response(response)
+
+    def post(self, request, format=None):
+        jsonData = request.data
+
+        userData = jsonData["user"]
+        profileData = jsonData["profile"]
+        mentorData = jsonData["mentor"]
+        menteeData = jsonData["mentee"]
+
+        userSerializer = UserSerializer(data=userData)
+        profileSerializer = ProfileSerializer(data=profileData)
+        mentorSerializer = MentorSerializer(data=mentorData)
+        menteeSerializer = MenteeSerializer(data=menteeData)
+
+        errors = None
+
+        if not (userSerializer.is_valid()):
+            errors = errors or {}
+            errors["user"] = userSerializer.errors
+
+        if not (profileSerializer.is_valid()):
+            errors = errors or {}
+            errors["profile"] = profileSerializer.errors
+
+        if not (mentorSerializer.is_valid()):
+            errors = errors or {}
+            errors["mentor"] = mentorSerializer.errors
+
+        if not (menteeSerializer.is_valid()):
+            errors = errors or {}
+            errors["mentee"] = menteeSerializer.errors
+
+        if errors:
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            user = userSerializer.save()
+
+            profileSerializer.instance = user.profile
+            profile = profileSerializer.save()
+
+            mentorSerializer.save(profile=profile)
+            menteeSerializer.save(profile=profile)
+
+            response = {}
+            response["user_id"] = userSerializer.data["id"]
+            response["profile_id"] = profileSerializer.data["id"]
+            response["mentor_id"] = mentorSerializer.data["id"]
+            response["mentee_id"] = menteeSerializer.data["id"]
+            return Response(response, status=status.HTTP_201_CREATED)
