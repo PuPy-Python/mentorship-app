@@ -1,8 +1,10 @@
 # Contributing
+
 Guidelines and expectations for contributing to this open source project.
 
 
 ## Git Hygiene
+
 Following are expectations for developers contributing to this repo.
 
 1. Fork the project repository to create a personal working repo
@@ -31,6 +33,7 @@ Method 2:
     `git push <remote> <branch> -f`
 
 ## Deployment
+
 This project is committed to following best practices of CI and CD.  To that end, automated testing is performed via Travis-CI and automated deployment is performed via Heroku.
 
 A successful deployment is dependent on three things:
@@ -42,6 +45,7 @@ TODO: Need public feedback for successful deploy
 TODO: How to Rollback
 
 ## Getting Started with git
+
 1. Fork the project repository to create a personal working repo
 2. Clone your fork `git clone <your-fork>`
 3. Set the project repository as upstream, and rename it `git remote add upstream <production-repo>` and `git remote rename upstream prod`
