@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  app:
+    container_name: mentorship-app
+    build: ./
+    command: make docker -C /app
+    # the following command will leave the image running so you can
+    # jump into it if need be
+    # command: tail -f /dev/null
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    depends_on:
+      - "postgresql"
+    volumes:
+      - '.:/app'
+
+  postgresql:
+    container_name: mentorship-app-postgresql
+    image: centos/postgresql-96-centos7
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRESQL_USER=mentorship
+      - POSTGRESQL_PASSWORD=mentorship
+      - POSTGRESQL_DATABASE=mentorship
+      - POSTGRESQL_ADMIN_PASSWORD=mentorship
