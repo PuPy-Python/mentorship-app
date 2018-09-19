@@ -1,7 +1,6 @@
 from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 
 from mentorship_profile.models import Profile, Mentor, Mentee
@@ -87,12 +86,14 @@ class UserDetail(APIView):
 
 
 class PairingList(generics.ListCreateAPIView):
-    # TODO: instead of mentor id and mentee id, should use mentor's and mentee's user ids
+    # TODO: instead of mentor id and mentee id,
+    #       should use mentor's and mentee's user ids
     queryset = Pairing.objects.all()
     serializer_class = PairingSerializer
 
 
 class PairingDetail(generics.RetrieveUpdateDestroyAPIView):
-    # TODO: instead of mentor id and mentee id, should use mentor's and mentee's user ids
+    # TODO: instead of mentor id and mentee id,
+    #       should use mentor's and mentee's user ids
     queryset = Pairing.objects.all()
     serializer_class = PairingSerializer
