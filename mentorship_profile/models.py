@@ -12,7 +12,7 @@ CATEGORIES = (
     ("data science", "Data Science"),
     ("backend devops", "Back End / DevOps"),
     ("web full stack", "Web / Full Stack Development"),
-    ("unknown", "Unknown")
+    ("unknown", "Unknown"),
 )
 
 YEARS = (
@@ -166,14 +166,8 @@ class Mentor(models.Model):
     areas_of_interest = MultiSelectField(
         choices=AREAS_OF_INTEREST,
         max_length=130,
-        default="unknown"
+        default=[]
     )
-
-    approved_mentors = ApprovedMentorsManager()
-
-    available_mentors = AvailableMentorsManager()
-
-    pending_mentors = PendingMentorsManager()
 
     mentee_capacity = models.IntegerField(
         default=DEFAULT_MENTEE_CAPACITY
@@ -182,6 +176,12 @@ class Mentor(models.Model):
     currently_accepting_mentees = models.BooleanField(
         default=False,
     )
+
+    approved_mentors = ApprovedMentorsManager()
+
+    available_mentors = AvailableMentorsManager()
+
+    pending_mentors = PendingMentorsManager()
 
     objects = models.Manager()
 

@@ -1,13 +1,13 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
-from django.contrib.auth.models import User
 
 from mentorship_profile.models import Profile, Mentor, Mentee
+from mentorship_pairing.models import Pairing
 from mentorship_api.serializers import UserSerializer, ProfileSerializer, \
-        MentorSerializer, MenteeSerializer
+        MentorSerializer, MenteeSerializer, PairingSerializer
 
 
 class UserDetail(APIView):
@@ -84,3 +84,15 @@ class UserDetail(APIView):
             response["mentor_id"] = mentorSerializer.data["id"]
             response["mentee_id"] = menteeSerializer.data["id"]
             return Response(response, status=status.HTTP_201_CREATED)
+
+
+class PairingList(generics.ListCreateAPIView):
+    # TODO: instead of mentor id and mentee id, should use mentor's and mentee's user ids
+    queryset = Pairing.objects.all()
+    serializer_class = PairingSerializer
+
+
+class PairingDetail(generics.RetrieveUpdateDestroyAPIView):
+    # TODO: instead of mentor id and mentee id, should use mentor's and mentee's user ids
+    queryset = Pairing.objects.all()
+    serializer_class = PairingSerializer

@@ -19,7 +19,7 @@ class GetProfile(APITestCase):
                                     linked_in_url="reidhoffman",
                                     projects_url="github.com/johnnyodonnell",
                                     bio="I am a test profile",
-                                    years_industry_experience="1-2")
+                                    years_industry_experience="1-3")
         self.user.profile.save()
 
         url = reverse("token_auth_api")

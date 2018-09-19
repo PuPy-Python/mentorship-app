@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 
 from mentorship_profile.models import Profile, Mentor, Mentee
+from mentorship_pairing.models import Pairing
 
 
 class MentorSerializer(serializers.ModelSerializer):
@@ -11,10 +12,8 @@ class MentorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mentor
         fields = ("id", "mentor_status", "areas_of_interest",
-                  "approved_mentors",
-                  "available_mentors", "pending_mentors", "mentee_capacity",
-                  "pending_mentors", "mentee_capacity",
-                  "currently_accepting_mentees")
+                  "mentee_capacity", "currently_accepting_mentees",
+                  "approved_mentors", "available_mentors", "pending_mentors")
 
 
 class MenteeSerializer(serializers.ModelSerializer):
@@ -46,3 +45,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "email", "first_name", "last_name")
+
+
+class PairingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pairing
+        fields = ("id", "mentor", "mentee", "requested_by", "status",
+                  "request_message")

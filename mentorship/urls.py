@@ -58,5 +58,7 @@ urlpatterns = [
     url(r'^api/v1/token-auth/$', obtain_jwt_token, name="token_auth_api"),
     url(r'^api/v1/token-refresh/$', refresh_jwt_token, name="token_refresh_api"),
     url(r'^api/v1/user/$', api_views.UserDetail.as_view(), name="user_api"),
+    url(r'^api/v1/pairing/$', api_views.PairingList.as_view(), name="pairing_list_api"),
+    url(r'^api/v1/pairing/(?P<pk>[0-9]+)/$', api_views.PairingDetail.as_view(), name="pairing_detail_api"),
     url(r'^api/v1/', include('rest_framework.urls'), name="rest_api"),  # API login and logout
 ]
