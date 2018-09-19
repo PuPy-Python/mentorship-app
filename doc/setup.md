@@ -1,19 +1,40 @@
-# Development
+# Setup Environment
 
-How to setup the application and instructions for common development tasks such as testing.
+## Docker
 
-## Setup
+* Download & Install Docker
+  * [Windows](https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe)
+  * [Mac](https://download.docker.com/mac/stable/Docker.dmg)
+  * [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+* Start Docker service
+* Create your own `.env` file using `./sample.env`
+* Build environment: `docker-compose up --build app`
+
+### Container Setup
+
+You can "ssh" into your container with the following command:
+
+`docker exec -it mentorship-app bash`
+
+The project code exists in the `/app` directory
+
+Please refer to this [docker cheat sheet](https://devhints.io/docker) for additional commands.
+
+
+## Manually
+
 How to setup this application for development.
 
 ### Dependencies
+
 Developing on this application requires the following:
 
-*  Python 3 (https://www.python.org/)
-*  pipenv (https://docs.pipenv.org/)
-*  Postgres (https://postgresapp.com/)
-*  make (https://www.gnu.org/software/make/)
-*  Node (https://nodejs.org/)
-*  Yarn (https://yarnpkg.com/lang/en/docs/install/)
+*  [Python 3](https://www.python.org/)
+*  [pipenv](https://docs.pipenv.org/)
+*  [Postgres](https://postgresapp.com/)
+*  [make](https://www.gnu.org/software/make/)
+*  [Node](https://nodejs.org/)
+*  [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 
 #### Basic Pipenv Usage
 
@@ -26,7 +47,6 @@ commands inside the virtualenv, use `pipenv run COMMAND [ARGS]`. For example,
 `pipenv run python manage.py help`. Alternatively, you can open a shell inside
 the virtualenv with `pipenv shell`, and then run commands as normal. For
 example, you could run `python manage.py help` inside `pipenv shell`.
-
 
 While developing, if you need to install a new package, run
 `pipenv install packagename`. If the package is not needed for deployment, run
@@ -41,6 +61,7 @@ Commit any changes that occur for `Pipfile` and `Pipfile.lock`. For the most
 part those should be "the right thing".
 
 ### Getting Started
+
 Once all dependencies are installed and the repository is cloned, perform the following steps:
 
     1. Create local databases for the application and for testing (assuming postgres cli is installed):
@@ -76,7 +97,7 @@ Once all dependencies are installed and the repository is cloned, perform the fo
         * Run `yarn start`
         * View the app in your web browser. Default address is `http://localhost:3000/`
 
-### Basic Commands
+## `make` Commands
 This project uses a Makefile to abstract most of the common commands for development.  Examples below:
 
 `make test` (runs pytest using pipenv)
