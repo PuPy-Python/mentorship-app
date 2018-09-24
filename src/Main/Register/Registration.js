@@ -3,7 +3,6 @@ import { Field } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import RadioGroup from '../forms/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '../forms/TextField';
 import SelectField from '../forms/SelectField';
 
@@ -25,9 +24,6 @@ const interests = [
   { label: 'Business, Entrepreneurship', value: 'business' },
   { label: 'Career Growth', value: 'careerGrowth' },
 ];
-
-const renderError = ({ meta: { touched, error } }) =>
-  touched && error ? <span>{error}</span> : false;
 
 export const Registration = ({ handleSubmit, classes, isMentor }) => {
   return (
@@ -53,14 +49,19 @@ export const Registration = ({ handleSubmit, classes, isMentor }) => {
         <label htmlFor="xinfo">Social Media & Info</label>
         <section id="xinfo">
           <Field name="bio" label="Bio" multiline rows="8" component={TextField} />
-          <Field name="goals" label="Goals" multiline rows="5" component={TextField}/>
-          <p></p>
-          <Field name="yearsOfExperience" label="Years of Industry Experience" component={RadioGroup} source={[
-            { value: 'entry', label: '0'},
-            { value: 'junior', label: '1-2'},
-            { value: 'intermediate', label: '3-6'},
-            { value: 'senior', label: '7+'}
-          ]}/>
+          <Field name="goals" label="Goals" multiline rows="5" component={TextField} />
+          <p />
+          <Field
+            name="yearsOfExperience"
+            label="Years of Industry Experience"
+            component={RadioGroup}
+            source={[
+              { value: 'entry', label: '0' },
+              { value: 'junior', label: '1-2' },
+              { value: 'intermediate', label: '3-6' },
+              { value: 'senior', label: '7+' },
+            ]}
+          />
 
           <Field name="slackHandle" label="Slack Handle" component={TextField} />
           <Field name="linkedinURL" label="Linkedin URL" component={TextField} />
@@ -75,7 +76,7 @@ export const Registration = ({ handleSubmit, classes, isMentor }) => {
           )}
         </section>
         <br />
-        <label htmlFor="interests">Areas of {(isMentor ? 'Expertise' : 'Interests')}</label>
+        <label htmlFor="interests">Areas of {isMentor ? 'Expertise' : 'Interests'}</label>
         <section id="interests">
           <Field
             name="interests"

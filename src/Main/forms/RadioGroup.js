@@ -10,23 +10,22 @@ import React from 'react';
 const styles = theme => ({
   root: {
     marginTop: 25,
-    display: "flex",
+    display: 'flex',
   },
   formLabel: {
     marginBottom: 5,
-    display: "flex",
-    float: "left",
-
+    display: 'flex',
+    float: 'left',
   },
   labelRadio: {
     height: 30,
-    display: "flex",
-    float: "left",
-    margin: `${theme.spacing.unit*6}px 15`,
+    display: 'flex',
+    float: 'left',
+    margin: `${theme.spacing.unit * 6}px 15`,
   },
   groupRow: {
     flexDirection: 'row',
-    float: "left",
+    float: 'left',
   },
 });
 
