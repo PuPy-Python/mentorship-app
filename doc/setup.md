@@ -9,6 +9,9 @@
 * Start Docker service
 * Create your own `.env` file using `./sample.env`
 * Build environment: `docker-compose up --build app`
+* Your environment will start building
+  * Navigate to http://localhost:3000 - to view the react app front-end debugger
+  * The Mentorship app is available at http://localhost:8000
 
 ### Container Setup
 
