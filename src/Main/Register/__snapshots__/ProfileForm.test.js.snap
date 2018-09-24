@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProfileForm /> renders snapshot correctly 1`] = `
+<form
+  noValidate={true}
+>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    CREATE YOUR 
+     PROFILE
+  </WithStyles(Typography)>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    _____
+  </WithStyles(Typography)>
+  <Field
+    component={[Function]}
+    label="Slack Handle"
+    name="slackHandle"
+  />
+  <Field
+    component={[Function]}
+    label="Linkedin URL"
+    name="linkedinURL"
+  />
+  <Field
+    component={[Function]}
+    label="Code Repository URL"
+    name="codeRepoURL"
+  />
+  <Field
+    component={[Function]}
+    label="Bio"
+    multiline={true}
+    name="bio"
+    rows="8"
+  />
+  <Field
+    component={[Function]}
+    label="Goals"
+    multiline={true}
+    name="goals"
+    rows="5"
+  />
+  <Field
+    component={[Function]}
+    label="Years of Industry Experience"
+    name="yearsOfExperience"
+    source={
+      Array [
+        Object {
+          "label": "0-1",
+          "value": "entry",
+        },
+        Object {
+          "label": "1-3",
+          "value": "junior",
+        },
+        Object {
+          "label": "3-7",
+          "value": "intermediate",
+        },
+        Object {
+          "label": "7+",
+          "value": "senior",
+        },
+      ]
+    }
+  />
+  <Field
+    component={[Function]}
+    items={
+      Array [
+        Object {
+          "label": "Portfolio/Code Review",
+          "value": "portfolio",
+        },
+        Object {
+          "label": "Job Search and Interviews",
+          "value": "jobSearch",
+        },
+        Object {
+          "label": "Industry Trends, Skills, Technologies",
+          "value": "skills",
+        },
+        Object {
+          "label": "Leadership, Management",
+          "value": "leadership",
+        },
+        Object {
+          "label": "Business, Entrepreneurship",
+          "value": "business",
+        },
+        Object {
+          "label": "Career Growth",
+          "value": "careerGrowth",
+        },
+      ]
+    }
+    label="Interests"
+    multiple={true}
+    name="interests"
+  />
+  <WithStyles(Button)
+    color="default"
+    onClick={[Function]}
+    size="large"
+    variant="contained"
+  >
+    BACK
+  </WithStyles(Button)>
+  <WithStyles(Button)
+    color="primary"
+    size="large"
+    type="submit"
+    variant="raised"
+  >
+    CONTINUE
+  </WithStyles(Button)>
+</form>
+`;

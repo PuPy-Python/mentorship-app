@@ -11,10 +11,7 @@ class Header extends Component {
               <Link to="/hello">Hello Home</Link>
             </li>
             <li>
-              <Link to="/Registration/Mentor">Mentor Registration</Link>
-            </li>
-            <li>
-              <Link to="/Registration/Mentee">Mentee Registration</Link>
+              <Link to="/Registration">Registration</Link>
             </li>
           </ul>
         </nav>

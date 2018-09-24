@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AccountTypeForm /> renders snapshot correctly 1`] = `
+<form
+  noValidate={true}
+>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    CHOOSE ACCOUNT TYPE
+  </WithStyles(Typography)>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    _____
+  </WithStyles(Typography)>
+  <Field
+    component={[Function]}
+    name="accountType"
+    source={
+      Array [
+        Object {
+          "label": "Mentee",
+          "value": "Mentee",
+        },
+        Object {
+          "label": "Mentor",
+          "value": "Mentor",
+        },
+      ]
+    }
+  />
+  <WithStyles(Button)
+    color="default"
+    disabled={true}
+    size="large"
+    variant="contained"
+  >
+    BACK
+  </WithStyles(Button)>
+  <WithStyles(Button)
+    color="primary"
+    size="large"
+    type="submit"
+    variant="raised"
+  >
+    CONTINUE
+  </WithStyles(Button)>
+</form>
+`;

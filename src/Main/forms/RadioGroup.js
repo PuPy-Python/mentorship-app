@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Radio from '@material-ui/core/Radio';
 import RadioButtonGroup from '@material-ui/core/RadioGroup';
 import React from 'react';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,7 @@ export const RadioGroup = ({
   classes,
   // redux-form props
   input,
+  meta: { touched, error },
 }) => (
   <FormControl className={classes.root}>
     <FormLabel className={classes.formLabel}>{label}</FormLabel>
@@ -57,6 +59,7 @@ export const RadioGroup = ({
         />
       ))}
     </RadioButtonGroup>
+    {touched && error && <FormHelperText error>{error}</FormHelperText>}
   </FormControl>
 );
 
