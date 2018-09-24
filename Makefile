@@ -24,7 +24,7 @@ migrate:
 docker:
 	pip install pipenv
 	pipenv install --dev --ignore-pipfile
-	pipenv run ./manage.py makemigrations
+	pipenv run ./manage.py migrate
 	yarn install
 	yarn start &
 	pipenv run ./manage.py runserver 0.0.0.0:8000
