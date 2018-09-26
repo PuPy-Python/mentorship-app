@@ -23,6 +23,10 @@ class MenteeTestCase(TestCase):
         self.assertEqual(new_mentee.profile, User.objects.first().profile)
 
     def test_mentee_areas_exceed_max_length(self):
-        actual = len(",".join(map(lambda x: x[0],Mentor.AREAS_OF_INTEREST_AND_GUIDANCE)))
-        max_allowed = next(x for x in Mentee._meta.fields if x.attname == "areas_of_guidance").max_length
+        actual = len(",".join(
+            map(lambda x: x[0], Mentor.AREAS_OF_INTEREST_AND_GUIDANCE)
+        ))
+        max_allowed = next(
+            x for x in Mentee._meta.fields if x.attname == "areas_of_guidance"
+        ).max_length
         self.assertLessEqual(actual, max_allowed)
