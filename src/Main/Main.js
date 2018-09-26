@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Home/Home';
 import HelloWorld from './HelloWorld';
-import MentorRegistrationContainer from './Register/MentorRegistrationContainer';
-import MenteeRegistrationContainer from './Register/MenteeRegistrationContainer';
+import Registration from './Register/Registration';
 
 class Main extends Component {
   render() {
@@ -12,8 +11,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/hello" component={Home} />
           <Route path="/hello/helloworld" component={HelloWorld} />
-          <Route path="/Registration/Mentor" component={MentorRegistrationContainer} />
-          <Route path="/Registration/Mentee" component={MenteeRegistrationContainer} />
+          <Route path="/Registration" component={Registration} />
           <Redirect to="/hello" />
         </Switch>
       </div>

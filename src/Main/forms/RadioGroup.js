@@ -6,27 +6,27 @@ import PropTypes from 'prop-types';
 import Radio from '@material-ui/core/Radio';
 import RadioButtonGroup from '@material-ui/core/RadioGroup';
 import React from 'react';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const styles = theme => ({
   root: {
     marginTop: 25,
-    display: "flex",
+    display: 'flex',
   },
   formLabel: {
     marginBottom: 5,
-    display: "flex",
-    float: "left",
-
+    display: 'flex',
+    float: 'left',
   },
   labelRadio: {
     height: 30,
-    display: "flex",
-    float: "left",
-    margin: `${theme.spacing.unit*6}px 15`,
+    display: 'flex',
+    float: 'left',
+    margin: `${theme.spacing.unit * 6}px 15`,
   },
   groupRow: {
     flexDirection: 'row',
-    float: "left",
+    float: 'left',
   },
 });
 
@@ -38,6 +38,7 @@ export const RadioGroup = ({
   classes,
   // redux-form props
   input,
+  meta: { touched, error },
 }) => (
   <FormControl className={classes.root}>
     <FormLabel className={classes.formLabel}>{label}</FormLabel>
@@ -58,6 +59,7 @@ export const RadioGroup = ({
         />
       ))}
     </RadioButtonGroup>
+    {touched && error && <FormHelperText error>{error}</FormHelperText>}
   </FormControl>
 );
 

@@ -19,6 +19,7 @@ export const MAX_LINKEDIN_URL_LENGTH = 200;
 export const MAX_CODE_REPO_URL_LENGTH = 200;
 
 export default ({
+  accountType,
   firstname,
   lastname,
   username,
@@ -31,6 +32,7 @@ export default ({
   codeRepoURL,
   menteeCapacity,
 }) => ({
+  accountType: checkRequired(accountType),
   firstname: checkTooLong(firstname, MAX_FIRST_NAME_LENGTH),
   lastname: checkTooLong(lastname, MAX_FIRST_NAME_LENGTH),
   username: checkRequired(username) || checkTooLong(username, MAX_USERNAME_LENGTH),

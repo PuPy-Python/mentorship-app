@@ -2,6 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Registration } from './Registration';
+import AccountTypeForm from './AccountTypeForm';
+import AccountInfoForm from './AccountInfoForm';
+import ProfileForm from './ProfileForm';
 
 const defaultProps = {
   classes: {},
@@ -10,15 +13,29 @@ const defaultProps = {
 const setup = props => shallow(<Registration {...defaultProps} {...props} />);
 
 describe('<Registration />', () => {
-  it('renders snapshot correctly when "isMentor" is undefined', () => {
+  it('renders AccountTypeForm when activeStep = 0', () => {
     const wrapper = setup();
 
-    expect(wrapper.find('[name="menteeCapacity"]')).toHaveLength(0);
+    expect(wrapper.find(AccountTypeForm)).toHaveLength(1);
+    expect(wrapper.find(AccountInfoForm)).toHaveLength(0);
+    expect(wrapper.find(ProfileForm)).toHaveLength(0);
   });
 
-  it('renders snapshot correctly when "isMentor" is true', () => {
-    const wrapper = setup({ isMentor: true });
+  it('renders AccountInfoForm when activeStep = 1', () => {
+    const wrapper = setup();
+    wrapper.setState({ activeStep: 1 });
 
-    expect(wrapper.find('[name="menteeCapacity"]')).toHaveLength(1);
+    expect(wrapper.find(AccountTypeForm)).toHaveLength(0);
+    expect(wrapper.find(AccountInfoForm)).toHaveLength(1);
+    expect(wrapper.find(ProfileForm)).toHaveLength(0);
+  });
+
+  it('renders ProfileForm when activeStep = 2', () => {
+    const wrapper = setup();
+    wrapper.setState({ activeStep: 2 });
+
+    expect(wrapper.find(AccountTypeForm)).toHaveLength(0);
+    expect(wrapper.find(AccountInfoForm)).toHaveLength(0);
+    expect(wrapper.find(ProfileForm)).toHaveLength(1);
   });
 });

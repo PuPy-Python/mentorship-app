@@ -3,13 +3,13 @@ import { withStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 const styles = theme => ({
-  textBoxRoot:{
+  textBoxRoot: {
     padding: 0,
     'label + &': {
       marginTop: theme.spacing.unit * 3,
     },
   },
-  textBox:{
+  textBox: {
     borderRadius: 4,
     backgroundColor: theme.palette.common.white,
     border: '1px solid #ced4da',
@@ -25,7 +25,6 @@ const styles = theme => ({
   bootstrapFormLabel: {
     fontSize: 18,
   },
-
 });
 
 export const TextField = ({ input, classes, meta: { touched, error }, ...rest }) => (
@@ -38,16 +37,15 @@ export const TextField = ({ input, classes, meta: { touched, error }, ...rest })
     fullWidth
     InputProps={{
       disableUnderline: true,
-      classes:{
+      classes: {
         root: classes.textBoxRoot,
         input: classes.textBox,
       },
     }}
     InputLabelProps={{
-          shrink: true,
-          className: classes.bootstrapFormLabel,
-        }}
-
+      shrink: true,
+      className: classes.bootstrapFormLabel,
+    }}
   />
 );
 

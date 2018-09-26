@@ -17,7 +17,7 @@ describe('Registration Validation', () => {
     });
   });
 
-  const requiredFields = ['username', 'email', 'password', 'confirmPassword'];
+  const requiredFields = ['accountType', 'username', 'email', 'password', 'confirmPassword'];
 
   requiredFields.forEach(field => {
     it(`${field} is required`, () => {

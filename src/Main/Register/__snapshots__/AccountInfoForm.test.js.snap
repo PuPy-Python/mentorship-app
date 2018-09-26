@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AccountInfoForm /> renders snapshot correctly 1`] = `
+<form
+  noValidate={true}
+>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    FILL IN ACCOUNT INFO
+  </WithStyles(Typography)>
+  <WithStyles(Typography)
+    color="secondary"
+    gutterBottom={true}
+    variant="subheading"
+  >
+    _____
+  </WithStyles(Typography)>
+  <Field
+    component={[Function]}
+    label="First Name"
+    name="firstname"
+  />
+  <Field
+    component={[Function]}
+    label="Last Name"
+    name="lastname"
+  />
+  <Field
+    component={[Function]}
+    label="Username"
+    name="username"
+    required={true}
+  />
+  <Field
+    component={[Function]}
+    label="E-mail"
+    name="email"
+    required={true}
+  />
+  <Field
+    component={[Function]}
+    label="Password"
+    name="password"
+    required={true}
+    type="password"
+  />
+  <Field
+    component={[Function]}
+    label="Confirm Password"
+    name="confirmPassword"
+    required={true}
+    type="password"
+  />
+  <WithStyles(Button)
+    color="default"
+    onClick={[Function]}
+    size="large"
+    variant="contained"
+  >
+    BACK
+  </WithStyles(Button)>
+  <WithStyles(Button)
+    color="primary"
+    size="large"
+    type="submit"
+    variant="contained"
+  >
+    CONTINUE
+  </WithStyles(Button)>
+</form>
+`;
