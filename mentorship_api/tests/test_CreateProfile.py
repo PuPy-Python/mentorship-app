@@ -29,7 +29,7 @@ class CreateProfile(APITestCase):
                 "currently_accepting_mentees": False,
             },
             "mentee": {
-                "area_of_interest": "career_growth",
+                "areas_of_guidance": ["career_growth"],
                 "goals": "increase our test converage",
             },
         }
@@ -67,7 +67,7 @@ class CreateProfile(APITestCase):
         self.assertIn("areas_of_interest", data["mentor"])
         self.assertIn("mentee_capacity", data["mentor"])
         self.assertIn("mentee", data)
-        self.assertIn("area_of_interest", data["mentee"])
+        self.assertIn("areas_of_guidance", data["mentee"])
         self.assertIn("goals", data["mentee"])
 
     def test_create_profile_errors_no_mentor_mentee(self):

@@ -18,12 +18,12 @@ class MentorSerializer(serializers.ModelSerializer):
 
 
 class MenteeSerializer(serializers.ModelSerializer):
-    area_of_interest = serializers.CharField()
+    areas_of_guidance = serializers.ListField()
     goals = serializers.CharField()
 
     class Meta:
         model = Mentee
-        fields = ("id", "area_of_interest", "goals")
+        fields = ("id", "areas_of_guidance", "goals")
 
 
 class ProfileSerializer(serializers.ModelSerializer):

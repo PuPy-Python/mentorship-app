@@ -63,7 +63,7 @@ class GetProfile(APITestCase):
         self.user.profile.mentor.save()
 
         self.user.profile.mentee = Mentee(
-                area_of_interest="career_growth",
+                areas_of_guidance=["career_growth"],
                 goals="increase test coverage",
                 profile=self.user.profile)
         self.user.profile.mentee.save()
@@ -125,7 +125,7 @@ class GetProfile(APITestCase):
                 self.user.profile.mentor.currently_accepting_mentees)
 
         self.assertTrue(data["mentee"])
-        self.assertEqual(data["mentee"]["area_of_interest"],
-                         self.user.profile.mentee.area_of_interest)
+        self.assertEqual(data["mentee"]["areas_of_guidance"],
+                         self.user.profile.mentee.areas_of_guidance)
         self.assertEqual(data["mentee"]["goals"],
                          self.user.profile.mentee.goals)
