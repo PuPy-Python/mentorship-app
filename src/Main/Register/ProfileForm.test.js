@@ -8,6 +8,7 @@ import { ProfileForm } from './ProfileForm';
 const defaultProps = {
   classes: {},
   goToPrevious: jest.fn(),
+  handleSubmit: jest.fn(),
 };
 
 const setup = props => shallow(<ProfileForm {...defaultProps} {...props} />);
@@ -19,28 +20,28 @@ describe('<ProfileForm />', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('renders the correct title when accountType = Mentor', () => {
-    const wrapper = setup({ accountType: 'Mentor' });
+  it('renders the correct title when accountType = mentor', () => {
+    const wrapper = setup({ accountType: 'mentor' });
 
     expect(wrapper.findWhere(n => n.text() === 'MENTEE')).toHaveLength(0);
     expect(wrapper.findWhere(n => n.text() === 'MENTOR')).toHaveLength(1);
   });
 
-  it('renders the correct title when accountType = Mentee', () => {
-    const wrapper = setup({ accountType: 'Mentee' });
+  it('renders the correct title when accountType = mentee', () => {
+    const wrapper = setup({ accountType: 'mentee' });
 
     expect(wrapper.findWhere(n => n.text() === 'MENTEE')).toHaveLength(1);
     expect(wrapper.findWhere(n => n.text() === 'MENTOR')).toHaveLength(0);
   });
 
-  it('renders mentee capacity when accountType = Mentor', () => {
-    const wrapper = setup({ accountType: 'Mentor' });
+  it('renders mentee capacity when accountType = mentor', () => {
+    const wrapper = setup({ accountType: 'mentor' });
 
-    expect(wrapper.find('[name="menteeCapacity"]')).toHaveLength(1);
+    expect(wrapper.find('[name="mentee_capacity"]')).toHaveLength(1);
   });
 
-  it('does not render mentee capacity when accountType = Mentee', () => {
-    const wrapper = setup({ accountType: 'Mentee' });
+  it('does not render mentee capacity when accountType = mentee', () => {
+    const wrapper = setup({ accountType: 'mentee' });
 
     expect(wrapper.find('[name="menteeCapacity"]')).toHaveLength(0);
   });

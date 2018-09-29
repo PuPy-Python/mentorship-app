@@ -1,5 +1,5 @@
 import React from 'react';
-import { formValueSelector, reduxForm, Field } from 'redux-form';
+import { formValueSelector, reduxForm, Field, FormSection } from 'redux-form';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import RadioGroup from '../forms/RadioGroup';
 import validate from './RegistrationValidation';
 import TextField from '../forms/TextField';
 import SelectField from '../forms/SelectField';
+import { createAccount } from '../actions/registration';
 
 const experience = [
   { label: '0-1', value: 'entry' },
@@ -26,8 +27,14 @@ const interests = [
   { label: 'Career Growth', value: 'careerGrowth' },
 ];
 
-export const ProfileForm = ({ handleSubmit, classes, goToPrevious, accountType = '' }) => (
-  <form onSubmit={handleSubmit} noValidate>
+export const ProfileForm = ({
+  handleSubmit,
+  createAccount,
+  classes,
+  goToPrevious,
+  accountType = 'mentee',
+}) => (
+  <form onSubmit={handleSubmit(createAccount)} noValidate>
     <Typography variant="subheading" color="secondary" gutterBottom>
       CREATE YOUR {accountType.toUpperCase()} PROFILE
     </Typography>
@@ -35,21 +42,44 @@ export const ProfileForm = ({ handleSubmit, classes, goToPrevious, accountType =
       _____
     </Typography>
 
-    <Field name="slackHandle" label="Slack Handle" component={TextField} />
-    <Field name="linkedinURL" label="Linkedin URL" component={TextField} />
-    <Field name="codeRepoURL" label="Code Repository URL" component={TextField} />
-    <Field name="bio" label="Bio" multiline rows="8" component={TextField} />
-    <Field name="goals" label="Goals" multiline rows="5" component={TextField} />
-    {accountType === 'Mentor' && (
-      <Field name="menteeCapacity" label="Mentee Capacity" type="number" component={TextField} />
-    )}
-    <Field
-      name="yearsOfExperience"
-      label="Years of Industry Experience"
-      component={RadioGroup}
-      source={experience}
-    />
-    <Field name="interests" label="Interests" multiple component={SelectField} items={interests} />
+    <FormSection name="profile">
+      <Field name="slack_handle" label="Slack Handle" component={TextField} />
+      <Field name="linked_in_url" label="Linkedin URL" component={TextField} />
+      <Field name="projects_url" label="Code Repository URL" component={TextField} />
+      <Field name="bio" label="Bio" multiline rows="8" component={TextField} required />
+    </FormSection>
+    <FormSection name={accountType}>
+      {(accountType === 'mentee' && (
+        <Field name="goals" label="Goals" multiline rows="5" component={TextField} required />
+      )) ||
+        (accountType === 'mentor' && (
+          <Field
+            name="mentee_capacity"
+            label="Mentee Capacity"
+            type="number"
+            component={TextField}
+            required
+          />
+        ))}
+    </FormSection>
+    <FormSection name="profile">
+      <Field
+        name="years_industry_experience"
+        label="Years of Industry Experience"
+        component={RadioGroup}
+        source={experience}
+      />
+    </FormSection>
+    <FormSection name={accountType}>
+      <Field
+        name="areas_of_guidance"
+        label="Areas of Guidance"
+        multiple
+        component={SelectField}
+        items={interests}
+        required
+      />
+    </FormSection>
 
     <Button
       variant="raised"
@@ -74,18 +104,17 @@ const mapStateToProps = state => ({
   accountType: selector(state, 'accountType'),
 });
 
+const mapDispatchToProps = { createAccount };
+
 export default compose(
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   reduxForm({
     form: 'registration',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate,
-    initialValues: {
-      interests: [],
-    },
-    onSubmit: () => {
-      console.log('not yet implemented');
-    },
   })
 )(ProfileForm);

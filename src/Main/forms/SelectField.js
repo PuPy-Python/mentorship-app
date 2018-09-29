@@ -41,7 +41,7 @@ const SelectField = ({
     <MuiTextField
       select
       id={name}
-      value={value}
+      value={value || []}
       label={label}
       className={className}
       disabled={disabled}

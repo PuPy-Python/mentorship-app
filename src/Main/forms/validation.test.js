@@ -9,9 +9,9 @@ import {
 } from './validation';
 
 describe('checkRequired', () => {
-  const validInputCases = ['some text', '  trim me   ', { fooObject: 'bar' }, 20];
+  const validInputCases = ['some text', '  trim me   ', { fooObject: 'bar' }, 20, [1]];
 
-  const invalidInputCases = ['', ' ', ' \n ', '   \t  ', null, undefined];
+  const invalidInputCases = ['', ' ', ' \n ', '   \t  ', [], null, undefined];
 
   validInputCases.forEach(validInput => {
     it(`returns undefined for valid input: "${validInput}"`, () => {

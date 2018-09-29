@@ -25,11 +25,11 @@ exports[`<AccountTypeForm /> renders snapshot correctly 1`] = `
       Array [
         Object {
           "label": "Mentee",
-          "value": "Mentee",
+          "value": "mentee",
         },
         Object {
           "label": "Mentor",
-          "value": "Mentor",
+          "value": "mentor",
         },
       ]
     }
