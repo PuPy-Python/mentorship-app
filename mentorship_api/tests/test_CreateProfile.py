@@ -11,6 +11,8 @@ class CreateProfile(APITestCase):
                 "email": "test-create@test.test",
                 "first_name": "Johnny",
                 "last_name": "O'Donnell",
+                "password": "i@m@Te3est",
+                "confirm_password": "i@m@Te3est",
             },
             "profile": {
                 "slack_handle": "johnnyodonnell",
@@ -46,8 +48,10 @@ class CreateProfile(APITestCase):
             "profile": {
             },
             "mentor": {
+                "dummy": "dummy",
             },
             "mentee": {
+                "dummy": "dummy",
             },
         }
         response = self.client.post(url, new_user, format="json")
@@ -65,3 +69,78 @@ class CreateProfile(APITestCase):
         self.assertIn("mentee", data)
         self.assertIn("area_of_interest", data["mentee"])
         self.assertIn("goals", data["mentee"])
+
+    def test_create_profile_errors_no_mentor_mentee(self):
+        url = reverse("user_api")
+        new_user = {
+            "user": {
+            },
+            "profile": {
+            },
+        }
+        response = self.client.post(url, new_user, format="json")
+        data = response.data
+        self.assertIn("user", data)
+        self.assertIn("username", data["user"])
+        self.assertIn("first_name", data["user"])
+        self.assertIn("last_name", data["user"])
+        self.assertIn("email", data["user"])
+        self.assertIn("profile", data)
+        self.assertIn("bio", data["profile"])
+
+    def test_create_profile_errors_no_password(self):
+        url = reverse("user_api")
+        new_user = {
+            "user": {
+                "username": "api-tester-create",
+                "email": "test-create@test.test",
+                "first_name": "Johnny",
+                "last_name": "O'Donnell",
+            },
+            "profile": {
+            },
+        }
+        response = self.client.post(url, new_user, format="json")
+        self.assertEqual(response.status_code, 400)
+        data = response.data
+        self.assertIn("user", data)
+        self.assertIn("non_field_errors", data["user"])
+
+    def test_create_profile_errors_no_password_confirm(self):
+        url = reverse("user_api")
+        new_user = {
+            "user": {
+                "username": "api-tester-create",
+                "email": "test-create@test.test",
+                "first_name": "Johnny",
+                "last_name": "O'Donnell",
+                "password": "i@m@Te3est",
+            },
+            "profile": {
+            },
+        }
+        response = self.client.post(url, new_user, format="json")
+        self.assertEqual(response.status_code, 400)
+        data = response.data
+        self.assertIn("user", data)
+        self.assertIn("non_field_errors", data["user"])
+
+    def test_create_profile_errors_password_confirm_no_match(self):
+        url = reverse("user_api")
+        new_user = {
+            "user": {
+                "username": "api-tester-create",
+                "email": "test-create@test.test",
+                "first_name": "Johnny",
+                "last_name": "O'Donnell",
+                "password": "i@m@Te3est",
+                "confirm_password": "not_a_match",
+            },
+            "profile": {
+            },
+        }
+        response = self.client.post(url, new_user, format="json")
+        self.assertEqual(response.status_code, 400)
+        data = response.data
+        self.assertIn("user", data)
+        self.assertIn("non_field_errors", data["user"])

@@ -42,7 +42,33 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+    password = serializers.CharField(write_only=True, required=False)
+    confirm_password = serializers.CharField(write_only=True, required=False)
+
+    def validate(self, data):
+        password = data.get("password", None)
+        confirm_password = data.pop("confirm_password", None)
+
+        if not password:
+            raise serializers.ValidationError(
+                    "Password is required for signing up.")
+
+        if not confirm_password:
+            raise serializers.ValidationError(
+                    "Password is required for signing up.")
+
+        if password != confirm_password:
+            raise serializers.ValidationError(
+                    "Password and confirm password do not match.")
+
+        return data
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        user.save()
+        return user
 
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name")
+        fields = ("id", "username", "email", "first_name", "last_name",
+                  "password", "confirm_password")

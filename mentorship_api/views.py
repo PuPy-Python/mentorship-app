@@ -10,7 +10,13 @@ from mentorship_api.serializers import UserSerializer, ProfileSerializer, \
         MentorSerializer, MenteeSerializer
 
 
-class UserDetail(APIView):
+# https://stackoverflow.com/questions/405489/python-update-object-from-dictionary
+def assign_dict(obj, updateDict):
+    for key, value in updateDict.items():
+        setattr(obj, key, value)
+
+
+class UserGeneral(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, format=None):
@@ -39,15 +45,21 @@ class UserDetail(APIView):
     def post(self, request, format=None):
         jsonData = request.data
 
-        userData = jsonData["user"]
-        profileData = jsonData["profile"]
-        mentorData = jsonData["mentor"]
-        menteeData = jsonData["mentee"]
+        userData = jsonData.get("user", None)
+        profileData = jsonData.get("profile", None)
+        mentorData = jsonData.get("mentor", None)
+        menteeData = jsonData.get("mentee", None)
 
         userSerializer = UserSerializer(data=userData)
         profileSerializer = ProfileSerializer(data=profileData)
-        mentorSerializer = MentorSerializer(data=mentorData)
-        menteeSerializer = MenteeSerializer(data=menteeData)
+        mentorSerializer = None
+        menteeSerializer = None
+
+        if mentorData:
+            mentorSerializer = MentorSerializer(data=mentorData)
+
+        if menteeData:
+            menteeSerializer = MenteeSerializer(data=menteeData)
 
         errors = None
 
@@ -59,11 +71,11 @@ class UserDetail(APIView):
             errors = errors or {}
             errors["profile"] = profileSerializer.errors
 
-        if not (mentorSerializer.is_valid()):
+        if mentorSerializer and (not mentorSerializer.is_valid()):
             errors = errors or {}
             errors["mentor"] = mentorSerializer.errors
 
-        if not (menteeSerializer.is_valid()):
+        if menteeSerializer and (not menteeSerializer.is_valid()):
             errors = errors or {}
             errors["mentee"] = menteeSerializer.errors
 
@@ -75,12 +87,59 @@ class UserDetail(APIView):
             profileSerializer.instance = user.profile
             profile = profileSerializer.save()
 
-            mentorSerializer.save(profile=profile)
-            menteeSerializer.save(profile=profile)
+            if mentorSerializer:
+                mentorSerializer.save(profile=profile)
+
+            if mentorSerializer:
+                menteeSerializer.save(profile=profile)
 
             response = {}
             response["user_id"] = userSerializer.data["id"]
             response["profile_id"] = profileSerializer.data["id"]
-            response["mentor_id"] = mentorSerializer.data["id"]
-            response["mentee_id"] = menteeSerializer.data["id"]
+
+            if mentorSerializer:
+                response["mentor_id"] = mentorSerializer.data["id"]
+
+            if menteeSerializer:
+                response["mentee_id"] = menteeSerializer.data["id"]
+
             return Response(response, status=status.HTTP_201_CREATED)
+
+
+class UserDetail(APIView):
+    def post(self, request, user_id, format=None):
+        jsonData = request.data
+
+        userData = jsonData.get("user", None)
+        profileData = jsonData.get("profile", None)
+        mentorData = jsonData.get("mentor", None)
+        menteeData = jsonData.get("mentee", None)
+
+        user = request.user
+        profile = Profile.objects.get(pk=user.profile.id)
+        mentor = None
+        mentee = None
+
+        if (profile.is_mentor()):
+            mentor = Mentor.objects.get(pk=user.profile.mentor.id)
+
+        if (profile.is_mentee()):
+            mentee = Mentee.objects.get(pk=user.profile.mentee.id)
+
+        if userData:
+            assign_dict(user, userData)
+            user.save()
+
+        if profileData:
+            assign_dict(profile, profileData)
+            profile.save()
+
+        if mentor and mentorData:
+            assign_dict(mentor, mentorData)
+            mentor.save()
+
+        if mentee and menteeData:
+            assign_dict(mentee, menteeData)
+            mentee.save()
+
+        return Response(status=status.HTTP_200_OK)
