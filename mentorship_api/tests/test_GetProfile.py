@@ -1,3 +1,4 @@
+from unittest import skipIf
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APITestCase
@@ -52,7 +53,7 @@ class GetProfile(APITestCase):
         self.assertEqual(data["profile"]["years_industry_experience"],
                          self.user.profile.years_industry_experience)
 
-    def test_get_mentor_and_mentee(self):
+    def test_get_mentor_and_mentee_no_id(self):
         self.user.profile.mentor = Mentor(
                 mentor_status="approved",
                 areas_of_interest=["career_growth"],
@@ -68,6 +69,30 @@ class GetProfile(APITestCase):
         self.user.profile.mentee.save()
 
         url = reverse("user_api")
+        self.test_get_mentor_and_mentee(url)
+
+    def test_get_mentor_and_mentee_with_id(self):
+        self.user.profile.mentor = Mentor(
+                mentor_status="approved",
+                areas_of_interest=["career_growth"],
+                mentee_capacity=3,
+                currently_accepting_mentees=True,
+                profile=self.user.profile)
+        self.user.profile.mentor.save()
+
+        self.user.profile.mentee = Mentee(
+                area_of_interest="career_growth",
+                goals="increase test coverage",
+                profile=self.user.profile)
+        self.user.profile.mentee.save()
+
+        url = reverse("user_api_detail", args=[self.user.username])
+        self.test_get_mentor_and_mentee(url)
+
+    def test_get_mentor_and_mentee(self, url=None):
+        if not url:
+            return
+
         response = self.client.get(url)
         data = response.json()
         self.assertTrue(data)
