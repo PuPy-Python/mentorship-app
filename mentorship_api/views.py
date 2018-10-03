@@ -82,25 +82,21 @@ class UserGeneral(APIView):
         if errors:
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
         else:
+            response = {}
+
             user = userSerializer.save()
+            response["user_id"] = userSerializer.data["id"]
 
             profileSerializer.instance = user.profile
             profile = profileSerializer.save()
-
-            if mentorSerializer:
-                mentorSerializer.save(profile=profile)
-
-            if mentorSerializer:
-                menteeSerializer.save(profile=profile)
-
-            response = {}
-            response["user_id"] = userSerializer.data["id"]
             response["profile_id"] = profileSerializer.data["id"]
 
             if mentorSerializer:
+                mentorSerializer.save(profile=profile)
                 response["mentor_id"] = mentorSerializer.data["id"]
 
             if menteeSerializer:
+                menteeSerializer.save(profile=profile)
                 response["mentee_id"] = menteeSerializer.data["id"]
 
             return Response(response, status=status.HTTP_201_CREATED)
@@ -117,14 +113,6 @@ class UserDetail(APIView):
 
         user = request.user
         profile = Profile.objects.get(pk=user.profile.id)
-        mentor = None
-        mentee = None
-
-        if (profile.is_mentor()):
-            mentor = Mentor.objects.get(pk=user.profile.mentor.id)
-
-        if (profile.is_mentee()):
-            mentee = Mentee.objects.get(pk=user.profile.mentee.id)
 
         if userData:
             assign_dict(user, userData)
@@ -134,11 +122,13 @@ class UserDetail(APIView):
             assign_dict(profile, profileData)
             profile.save()
 
-        if mentor and mentorData:
+        if mentorData and profile.is_mentor():
+            mentor = Mentor.objects.get(pk=user.profile.mentor.id)
             assign_dict(mentor, mentorData)
             mentor.save()
 
-        if mentee and menteeData:
+        if menteeData and profile.is_mentee():
+            mentee = Mentee.objects.get(pk=user.profile.mentee.id)
             assign_dict(mentee, menteeData)
             mentee.save()
 
