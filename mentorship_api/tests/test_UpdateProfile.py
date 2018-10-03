@@ -54,7 +54,7 @@ class UpdateProfile(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
 
     def test_update_profile(self):
-        url = reverse("user_api_detail", args=[self.user_id])
+        url = reverse("user_api")
 
         updated_user_name = "John"
         updated_profile_bio = "Updating my test profile..."
@@ -76,7 +76,7 @@ class UpdateProfile(APITestCase):
                 "area_of_interest": updated_mentee_area_of_interest,
             },
         }
-        response = self.client.post(url, user_updates, format="json")
+        response = self.client.put(url, user_updates, format="json")
         self.assertEqual(response.status_code, 200)
 
         user = User.objects.get(pk=self.user_id)
@@ -131,9 +131,9 @@ class UpdateProfileNoUpdate(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
 
     def test_update_profile(self):
-        url = reverse("user_api_detail", args=[self.user_id])
+        url = reverse("user_api")
 
         user_updates = {}
 
-        response = self.client.post(url, user_updates, format="json")
+        response = self.client.put(url, user_updates, format="json")
         self.assertEqual(response.status_code, 200)

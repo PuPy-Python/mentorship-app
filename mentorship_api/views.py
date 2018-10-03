@@ -16,13 +16,10 @@ def assign_dict(obj, updateDict):
         setattr(obj, key, value)
 
 
-class UserGeneral(APIView):
-    permission_classes = (AllowAny,)
-
-    def get(self, request, format=None):
+class UserCommon(APIView):
+    def get(self, user):
         response = {}
 
-        user = request.user
         userSerializer = UserSerializer(user)
         response["user"] = userSerializer.data
 
@@ -41,6 +38,45 @@ class UserGeneral(APIView):
             response["mentee"] = menteeSerializer.data
 
         return Response(response)
+
+    def put(self, user, jsonData):
+        userData = jsonData.get("user", None)
+        profileData = jsonData.get("profile", None)
+        mentorData = jsonData.get("mentor", None)
+        menteeData = jsonData.get("mentee", None)
+
+        profile = Profile.objects.get(pk=user.profile.id)
+
+        if userData:
+            assign_dict(user, userData)
+            user.save()
+
+        if profileData:
+            assign_dict(profile, profileData)
+            profile.save()
+
+        if mentorData and profile.is_mentor():
+            mentor = Mentor.objects.get(pk=user.profile.mentor.id)
+            assign_dict(mentor, mentorData)
+            mentor.save()
+
+        if menteeData and profile.is_mentee():
+            mentee = Mentee.objects.get(pk=user.profile.mentee.id)
+            assign_dict(mentee, menteeData)
+            mentee.save()
+
+        return Response(status=status.HTTP_200_OK)
+
+
+class UserGeneral(UserCommon):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, format=None):
+        return super(UserGeneral, self).get(request.user)
+
+    def put(self, request, format=None):
+        jsonData = request.data
+        return super(UserGeneral, self).put(request.user, jsonData)
 
     def post(self, request, format=None):
         jsonData = request.data
@@ -102,34 +138,7 @@ class UserGeneral(APIView):
             return Response(response, status=status.HTTP_201_CREATED)
 
 
-class UserDetail(APIView):
-    def post(self, request, user_id, format=None):
-        jsonData = request.data
-
-        userData = jsonData.get("user", None)
-        profileData = jsonData.get("profile", None)
-        mentorData = jsonData.get("mentor", None)
-        menteeData = jsonData.get("mentee", None)
-
-        user = request.user
-        profile = Profile.objects.get(pk=user.profile.id)
-
-        if userData:
-            assign_dict(user, userData)
-            user.save()
-
-        if profileData:
-            assign_dict(profile, profileData)
-            profile.save()
-
-        if mentorData and profile.is_mentor():
-            mentor = Mentor.objects.get(pk=user.profile.mentor.id)
-            assign_dict(mentor, mentorData)
-            mentor.save()
-
-        if menteeData and profile.is_mentee():
-            mentee = Mentee.objects.get(pk=user.profile.mentee.id)
-            assign_dict(mentee, menteeData)
-            mentee.save()
-
-        return Response(status=status.HTTP_200_OK)
+class UserDetail(UserCommon):
+    def get(self, request, username, format=None):
+        user = User.objects.get(username=username)
+        return super(UserDetail, self).get(user)
