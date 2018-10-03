@@ -24,7 +24,7 @@ class CreateProfile(APITestCase):
             },
             "mentor": {
                 "mentor_status": "approved",
-                "areas_of_interest": ["career_growth"],
+                "areas_of_guidance": ["career_growth"],
                 "mentee_capacity": 3,
                 "currently_accepting_mentees": False,
             },
@@ -64,7 +64,7 @@ class CreateProfile(APITestCase):
         self.assertIn("profile", data)
         self.assertIn("bio", data["profile"])
         self.assertIn("mentor", data)
-        self.assertIn("areas_of_interest", data["mentor"])
+        self.assertIn("areas_of_guidance", data["mentor"])
         self.assertIn("mentee_capacity", data["mentor"])
         self.assertIn("mentee", data)
         self.assertIn("areas_of_guidance", data["mentee"])

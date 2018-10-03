@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 from .test_utilities import UserFactory
-from ..models import Mentee, Mentor, AREAS_OF_INTEREST_AND_GUIDANCE
+from ..models import Mentee, Mentor, AREAS_OF_GUIDANCE
 
 
 class MenteeTestCase(TestCase):
@@ -24,7 +24,7 @@ class MenteeTestCase(TestCase):
 
     def test_mentee_areas_exceed_max_length(self):
         actual = len(",".join(
-            map(lambda x: x[0], AREAS_OF_INTEREST_AND_GUIDANCE)
+            map(lambda x: x[0], AREAS_OF_GUIDANCE)
         ))
         max_allowed = next(
             x for x in Mentee._meta.fields if x.attname == "areas_of_guidance"

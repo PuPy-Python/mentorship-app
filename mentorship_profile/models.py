@@ -15,7 +15,7 @@ CATEGORIES = (
     ("unknown", "Unknown")
 )
 
-AREAS_OF_INTEREST_AND_GUIDANCE = (
+AREAS_OF_GUIDANCE = (
         ('portfolio_code_review', 'Portfolio / Code Reviews'),
         ('job_search_interviews', 'Job Search and Interviews'),
         ('industry_trends', 'Industry Trends, Skills, Technologies'),
@@ -163,8 +163,8 @@ class Mentor(models.Model):
         default="unapproved"
     )
 
-    areas_of_interest = MultiSelectField(
-        choices=AREAS_OF_INTEREST_AND_GUIDANCE,
+    areas_of_guidance = MultiSelectField(
+        choices=AREAS_OF_GUIDANCE,
         max_length=130,
         default="unknown"
     )
@@ -194,7 +194,7 @@ class Mentee(models.Model):
     )
 
     areas_of_guidance = MultiSelectField(
-        choices=AREAS_OF_INTEREST_AND_GUIDANCE,
+        choices=AREAS_OF_GUIDANCE,
         max_length=130,
         default="unknown"
     )
