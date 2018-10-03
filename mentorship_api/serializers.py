@@ -5,12 +5,12 @@ from mentorship_profile.models import Profile, Mentor, Mentee
 
 
 class MentorSerializer(serializers.ModelSerializer):
-    areas_of_interest = serializers.ListField()
+    areas_of_guidance = serializers.ListField()
     mentee_capacity = serializers.IntegerField(max_value=5, min_value=1)
 
     class Meta:
         model = Mentor
-        fields = ("id", "mentor_status", "areas_of_interest",
+        fields = ("id", "mentor_status", "areas_of_guidance",
                   "approved_mentors",
                   "available_mentors", "pending_mentors", "mentee_capacity",
                   "pending_mentors", "mentee_capacity",
@@ -18,12 +18,12 @@ class MentorSerializer(serializers.ModelSerializer):
 
 
 class MenteeSerializer(serializers.ModelSerializer):
-    area_of_interest = serializers.CharField()
+    areas_of_guidance = serializers.ListField()
     goals = serializers.CharField()
 
     class Meta:
         model = Mentee
-        fields = ("id", "area_of_interest", "goals")
+        fields = ("id", "areas_of_guidance", "goals")
 
 
 class ProfileSerializer(serializers.ModelSerializer):

@@ -125,7 +125,7 @@ class MentorForm(forms.ModelForm):
     class Meta:
         model = Mentor
         fields = (
-            "areas_of_interest",
+            "areas_of_guidance",
             "mentee_capacity",
             "currently_accepting_mentees",
         )
@@ -142,4 +142,4 @@ class MenteeForm(forms.ModelForm):
 
     class Meta:
         model = Mentee
-        fields = ("area_of_interest", "goals")
+        fields = ("areas_of_guidance", "goals")
