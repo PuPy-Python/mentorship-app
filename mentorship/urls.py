@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'^pairing/request/(?P<mentee_id>[0-9]+)/(?P<mentor_id>[0-9]+)/$', pairing_views.pairing_request_view, name="pairing_request"),
     url(r'^api/v1/token-auth/$', obtain_jwt_token, name="token_auth_api"),
     url(r'^api/v1/token-refresh/$', refresh_jwt_token, name="token_refresh_api"),
-    url(r'^api/v1/user/$', api_views.UserDetail.as_view(), name="user_api"),
+    url(r'^api/v1/user/$', api_views.UserGeneral.as_view(), name="user_api"),
+    url(r'^api/v1/user/(?P<user_id>[0-9]+)/$', api_views.UserDetail.as_view(), name="user_api_detail"),
     url(r'^api/v1/', include('rest_framework.urls'), name="rest_api"),  # API login and logout
 ]
