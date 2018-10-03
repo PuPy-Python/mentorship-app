@@ -31,12 +31,12 @@ class UpdateProfile(APITestCase):
             },
             "mentor": {
                 "mentor_status": "approved",
-                "areas_of_interest": ["career_growth"],
+                "areas_of_guidance": ["career_growth"],
                 "mentee_capacity": 3,
                 "currently_accepting_mentees": False,
             },
             "mentee": {
-                "area_of_interest": "career_growth",
+                "areas_of_guidance": ["career_growth"],
                 "goals": "increase our test converage",
             },
         }
@@ -59,7 +59,7 @@ class UpdateProfile(APITestCase):
         updated_user_name = "John"
         updated_profile_bio = "Updating my test profile..."
         updated_mentor_currently_accepting_mentees = True
-        updated_mentee_area_of_interest = "job_search_interviews"
+        updated_mentee_areas_of_guidance = ["job_search_interviews"]
 
         user_updates = {
             "user": {
@@ -73,7 +73,7 @@ class UpdateProfile(APITestCase):
                 updated_mentor_currently_accepting_mentees,
             },
             "mentee": {
-                "area_of_interest": updated_mentee_area_of_interest,
+                "areas_of_guidance": updated_mentee_areas_of_guidance,
             },
         }
         response = self.client.put(url, user_updates, format="json")
@@ -88,8 +88,8 @@ class UpdateProfile(APITestCase):
         self.assertEqual(profile.bio, updated_profile_bio)
         self.assertEqual(mentor.currently_accepting_mentees,
                          updated_mentor_currently_accepting_mentees)
-        self.assertEqual(mentee.area_of_interest,
-                         updated_mentee_area_of_interest)
+        self.assertEqual(mentee.areas_of_guidance,
+                         updated_mentee_areas_of_guidance)
 
 
 class UpdateProfileNoUpdate(APITestCase):
