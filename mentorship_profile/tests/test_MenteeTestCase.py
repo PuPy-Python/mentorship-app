@@ -19,5 +19,5 @@ class MenteeTestCase(TestCase):
         """Test default values for newly created mentee."""
         new_mentee = self.create_mentee()
 
-        self.assertEqual(new_mentee.area_of_interest, "unknown")
+        self.assertEqual(new_mentee.areas_of_guidance, "unknown")
         self.assertEqual(new_mentee.profile, User.objects.first().profile)

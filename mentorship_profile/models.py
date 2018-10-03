@@ -15,6 +15,15 @@ CATEGORIES = (
     ("unknown", "Unknown")
 )
 
+AREAS_OF_INTEREST_AND_GUIDANCE = (
+        ('portfolio_code_review', 'Portfolio / Code Reviews'),
+        ('job_search_interviews', 'Job Search and Interviews'),
+        ('industry_trends', 'Industry Trends, Skills, Technologies'),
+        ('leadership_management', 'Leadership / Management'),
+        ('business_entrepreneurship', 'Business, Entrepreneurship'),
+        ('career_growth', 'Career Growth'),
+    )
+
 YEARS = (
     ("0-1", "0 - 1"),
     ("1-3", "1 - 3"),
@@ -144,7 +153,7 @@ class Mentor(models.Model):
 
     DEFAULT_MENTEE_CAPACITY = 5
 
-    AREAS_OF_INTEREST = (
+    AREAS_OF_INTEREST_AND_GUIDANCE = (
         ('portfolio_code_review', 'Portfolio / Code Reviews'),
         ('job_search_interviews', 'Job Search and Interviews'),
         ('industry_trends', 'Industry Trends, Skills, Technologies'),
@@ -164,7 +173,7 @@ class Mentor(models.Model):
     )
 
     areas_of_interest = MultiSelectField(
-        choices=AREAS_OF_INTEREST,
+        choices=AREAS_OF_INTEREST_AND_GUIDANCE,
         max_length=130,
         default="unknown"
     )
@@ -193,9 +202,9 @@ class Mentee(models.Model):
         Profile
     )
 
-    area_of_interest = models.CharField(
-        choices=CATEGORIES,
-        max_length=30,
+    areas_of_guidance = MultiSelectField(
+        choices=AREAS_OF_INTEREST_AND_GUIDANCE,
+        max_length=130,
         default="unknown"
     )
 
