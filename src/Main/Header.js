@@ -1,3 +1,4 @@
+import Menu from '@material-ui/core/Menu';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -5,13 +6,19 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <nav>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
           <ul>
             <li>
-              <Link to="/hello">Hello Home</Link>
+              <Link to="/">PuPPy Mentorship</Link>
             </li>
             <li>
-              <Link to="/Registration">Registration</Link>
+              <Link to="/register">Sign Up</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/code-of-conduct">Code of Conduct</Link>
             </li>
           </ul>
         </nav>
