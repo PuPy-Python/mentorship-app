@@ -74,14 +74,14 @@ class GetProfile(APITestCase):
     def test_get_mentor_and_mentee_with_id(self):
         self.user.profile.mentor = Mentor(
                 mentor_status="approved",
-                areas_of_interest=["career_growth"],
+                areas_of_guidance=["career_growth"],
                 mentee_capacity=3,
                 currently_accepting_mentees=True,
                 profile=self.user.profile)
         self.user.profile.mentor.save()
 
         self.user.profile.mentee = Mentee(
-                area_of_interest="career_growth",
+                areas_of_guidance=["career_growth"],
                 goals="increase test coverage",
                 profile=self.user.profile)
         self.user.profile.mentee.save()
