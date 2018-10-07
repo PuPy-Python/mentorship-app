@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import styles from '../index.css';
 
 class Header extends Component {
   render() {
     return (
-      <header>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <AppBar position="static">
+        <Toolbar>
           <ul>
             <li>
-              <Link to="/">PuPPy Mentorship</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/signup">Sign Up</Link>
@@ -16,11 +20,14 @@ class Header extends Component {
             <li>
               <Link to="/login">Login</Link>
             </li>
+            <li>
+              <Link to="/code-of-conduct">Code of Conduct</Link>
+            </li>
           </ul>
-        </nav>
-      </header>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
-export default Header;
+export default withStyles(styles)(Header);
