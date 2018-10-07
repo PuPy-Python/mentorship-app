@@ -19,8 +19,6 @@ from django.views.generic import TemplateView
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from . import views as general_views
-from mentorship_profile import views as profile_views
-from mentorship_pairing import views as pairing_views
 from mentorship_api import views as api_views
 
 urlpatterns = [
