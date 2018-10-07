@@ -52,8 +52,8 @@ export const ProfileForm = ({ handleSubmit, classes, goToPrevious, accountType =
     <Field name="interests" label="Interests" multiple component={SelectField} items={interests} />
 
     <Button
-      variant="contained"
-      color="default"
+      variant="raised"
+      color="secondary"
       size="large"
       className={classes.button}
       onClick={goToPrevious}

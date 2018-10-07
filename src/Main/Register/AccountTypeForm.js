@@ -2,7 +2,6 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import RadioGroup from '../forms/RadioGroup';
 import validate from './RegistrationValidation';
 
@@ -19,10 +18,24 @@ export const AccountTypeForm = ({ handleSubmit, classes }) => (
 
     <Field name="accountType" component={RadioGroup} source={accountTypes} />
 
-    <Button variant="contained" color="default" size="large" className={classes.button} disabled>
+    <Button
+      variant="raised"
+      isHidden="true"
+      color="secondary"
+      size="large"
+      className={classes.button}
+      disabled
+    >
       BACK
     </Button>
-    <Button variant="raised" type="submit" color="primary" size="large" className={classes.button}>
+
+    <Button
+      variant="raised"
+      type="submit"
+      color="primary"
+      size="large"
+      className={classes.button}
+    >
       CONTINUE
     </Button>
   </form>

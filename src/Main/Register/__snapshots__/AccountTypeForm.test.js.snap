@@ -35,10 +35,11 @@ exports[`<AccountTypeForm /> renders snapshot correctly 1`] = `
     }
   />
   <WithStyles(Button)
-    color="default"
+    color="secondary"
     disabled={true}
+    isHidden="true"
     size="large"
-    variant="contained"
+    variant="raised"
   >
     BACK
   </WithStyles(Button)>
