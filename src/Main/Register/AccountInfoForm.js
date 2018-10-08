@@ -2,7 +2,6 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import validate from './RegistrationValidation';
 import TextField from '../forms/TextField';
 
@@ -29,8 +28,8 @@ export const AccountInfoForm = ({ handleSubmit, classes, goToPrevious }) => (
     />
 
     <Button
-      variant="contained"
-      color="default"
+      variant="raised"
+      color="secondary"
       size="large"
       className={classes.button}
       onClick={goToPrevious}

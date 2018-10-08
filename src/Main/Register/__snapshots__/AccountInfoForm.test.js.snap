@@ -55,10 +55,10 @@ exports[`<AccountInfoForm /> renders snapshot correctly 1`] = `
     type="password"
   />
   <WithStyles(Button)
-    color="default"
+    color="secondary"
     onClick={[Function]}
     size="large"
-    variant="contained"
+    variant="raised"
   >
     BACK
   </WithStyles(Button)>
