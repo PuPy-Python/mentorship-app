@@ -29,13 +29,7 @@ export const AccountTypeForm = ({ handleSubmit, classes }) => (
       BACK
     </Button>
 
-    <Button
-      variant="raised"
-      type="submit"
-      color="primary"
-      size="large"
-      className={classes.button}
-    >
+    <Button variant="raised" type="submit" color="primary" size="large" className={classes.button}>
       CONTINUE
     </Button>
   </form>

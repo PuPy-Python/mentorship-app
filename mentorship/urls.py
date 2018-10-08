@@ -22,11 +22,11 @@ from . import views as general_views
 from mentorship_api import views as api_views
 
 urlpatterns = [
-    url(r'^/', TemplateView.as_view(template_name='index.html')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/token-auth/$', obtain_jwt_token, name="token_auth_api"),
     url(r'^api/v1/token-refresh/$', refresh_jwt_token, name="token_refresh_api"),
     url(r'^api/v1/user/$', api_views.UserGeneral.as_view(), name="user_api"),
     url(r'^api/v1/user/(?P<username>[\w.@+-]+)/$', api_views.UserDetail.as_view(), name="user_api_detail"),
     url(r'^api/v1/', include('rest_framework.urls'), name="rest_api"),  # API login and logout
+    url(r'', TemplateView.as_view(template_name='index.html')),
 ]
