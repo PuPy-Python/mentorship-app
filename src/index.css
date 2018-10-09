@@ -3,3 +3,28 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+header a:hover {
+  text-decoration: underline;
+}
+
+header a, header a:visited {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+header li {
+  display: inline;
+  margin-right: 15px;
+}
+
+.Main {
+  max-width: 1180px;
+  margin: auto;
+  padding: 50px;
+}
+
+.Main h1 {
+  margin: 15px 0 10px 0;
+}
