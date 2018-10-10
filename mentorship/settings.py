@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'supersecret')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -96,14 +96,24 @@ JWT_AUTH = {
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+DB_CONN_STRING=os.environ.get('DATABASE_URL')
+DB_CREDS_HOST=DB_CONN_STRING.split("postgres://")[1].split("@")
+DB_CREDS=DB_CREDS_HOST[0].split(":")
+DB_ENDPOINT=DB_CREDS_HOST[1].split(":")
+DB_USER=DB_CREDS[0]
+DB_PASS=DB_CREDS[1]
+DB_HOST=DB_ENDPOINT[0]
+DB_PORT_NAME=DB_ENDPOINT[1].split("/")
+DB_PORT=DB_PORT_NAME[0]
+DB_NAME=DB_PORT_NAME[1]
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME', 'puppy_mentors'),
-        'USER': os.environ.get('DATABASE_USER', ''),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-        'HOST': os.environ.get('DATABASE_URL', '127.0.0.1'),
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
         'PORT': '5432',
         'TEST': {
             'NAME': os.environ.get('TEST_DATABASE_NAME', 'test_puppy_mentors')
@@ -167,7 +177,7 @@ if os.environ.get("APP_ENV", "") == "PROD":
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = 'puppymentorship@gmail.com'
-    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "payitforward")
     django_heroku.settings(locals())
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

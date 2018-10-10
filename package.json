@@ -38,7 +38,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --setupFiles ./test-setup.js",
-    "lint": "eslint ./src --max-warnings 0"
+    "lint": "eslint ./src --max-warnings 0",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": ">8.9.3",
