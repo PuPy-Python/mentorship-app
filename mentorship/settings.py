@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'supersecret')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': os.environ.get('DATABASE_NAME', 'puppy_mentors'),
         'USER': os.environ.get('DATABASE_USER', ''),
         'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-        'HOST': os.environ.get('DATABASE_URL', '127.0.0.1'),
+        'HOST': os.environ.get('DATABASE_HOST', '127.0.0.1'),
         'PORT': '5432',
         'TEST': {
             'NAME': os.environ.get('TEST_DATABASE_NAME', 'test_puppy_mentors')
