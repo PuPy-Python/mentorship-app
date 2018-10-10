@@ -96,16 +96,22 @@ JWT_AUTH = {
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-DB_CONN_STRING=os.environ.get('DATABASE_URL')
-DB_CREDS_HOST=DB_CONN_STRING.split("postgres://")[1].split("@")
-DB_CREDS=DB_CREDS_HOST[0].split(":")
-DB_ENDPOINT=DB_CREDS_HOST[1].split(":")
-DB_USER=DB_CREDS[0]
-DB_PASS=DB_CREDS[1]
-DB_HOST=DB_ENDPOINT[0]
-DB_PORT_NAME=DB_ENDPOINT[1].split("/")
-DB_PORT=DB_PORT_NAME[0]
-DB_NAME=DB_PORT_NAME[1]
+if os.environ.get("APP_ENV", "") == "PROD":
+    DB_CONN_STRING=os.environ.get('DATABASE_URL')
+    DB_CREDS_HOST=DB_CONN_STRING.split("postgres://")[1].split("@")
+    DB_CREDS=DB_CREDS_HOST[0].split(":")
+    DB_ENDPOINT=DB_CREDS_HOST[1].split(":")
+    DB_USER=DB_CREDS[0]
+    DB_PASS=DB_CREDS[1]
+    DB_HOST=DB_ENDPOINT[0]
+    DB_PORT_NAME=DB_ENDPOINT[1].split("/")
+    DB_PORT=DB_PORT_NAME[0]
+    DB_NAME=DB_PORT_NAME[1]
+else:
+    DB_NAME=os.environ.get("DATABASE_NAME", "puppy-mentors")
+    DB_USER=os.environ.get("DATABASE_USER", "")
+    DB_PASS=os.environ.get("DATABASE_PASSWORD", "")
+    DB_HOST=os.environ.get("DATABASE_HOST", "127.0.0.1")
 
 DATABASES = {
     'default': {
