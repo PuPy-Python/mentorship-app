@@ -18,16 +18,10 @@ class Header extends Component {
               <Link to="/signup">Sign Up</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
               <Link to="/code-of-conduct">Code of Conduct</Link>
             </li>
             <li>
               <Link to="/Profile">Your Profile</Link>
-            </li>
-            <li>
-              <Link to="/login/">Login</Link>
             </li>
           </ul>
         </Toolbar>

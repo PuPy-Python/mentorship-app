@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
-import Home from './Home/Home';
 import Registration from './Register/Registration';
 import Login from './containers/Login';
 import CodeOfConduct from './pages/CodeOfConduct';
@@ -12,9 +11,8 @@ class Main extends Component {
     return (
       <div className="Main">
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Login} />
           <Route path="/signup" component={Registration} />
-          <Route path="/login" component={Login} />
           <Route path="/code-of-conduct" component={CodeOfConduct} />
           <Route path="/Profile/:username?" component={PublicProfileContainer} />
           <Redirect to="/" />
