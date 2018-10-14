@@ -108,10 +108,10 @@ if os.environ.get("APP_ENV", "") == "PROD":
     DB_PORT = DB_PORT_NAME[0]
     DB_NAME = DB_PORT_NAME[1]
 else:
-    DB_NAME=os.environ.get("DATABASE_NAME", "puppy-mentors")
-    DB_USER=os.environ.get("DATABASE_USER", "")
-    DB_PASS=os.environ.get("DATABASE_PASSWORD", "")
-    DB_HOST=os.environ.get("DATABASE_HOST", "127.0.0.1")
+    DB_NAME = os.environ.get("DATABASE_NAME", "puppy-mentors")
+    DB_USER = os.environ.get("DATABASE_USER", "")
+    DB_PASS = os.environ.get("DATABASE_PASSWORD", "")
+    DB_HOST = os.environ.get("DATABASE_HOST", "127.0.0.1")
 
 DATABASES = {
     'default': {
