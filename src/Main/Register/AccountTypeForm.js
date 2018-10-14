@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import RadioGroup from '../forms/RadioGroup';
 import validate from './RegistrationValidation';
 
-const accountTypes = [{ label: 'Mentee', value: 'Mentee' }, { label: 'Mentor', value: 'Mentor' }];
+const accountTypes = [{ label: 'Mentee', value: 'mentee' }, { label: 'Mentor', value: 'mentor' }];
 
 export const AccountTypeForm = ({ handleSubmit, classes }) => (
   <form onSubmit={handleSubmit} noValidate>
@@ -42,4 +42,7 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
   validate,
+  initialValues: {
+    accountType: 'mentee',
+  },
 })(AccountTypeForm);

@@ -18,42 +18,47 @@ exports[`<AccountInfoForm /> renders snapshot correctly 1`] = `
   >
     _____
   </WithStyles(Typography)>
-  <Field
-    component={[Function]}
-    label="First Name"
-    name="firstname"
-  />
-  <Field
-    component={[Function]}
-    label="Last Name"
-    name="lastname"
-  />
-  <Field
-    component={[Function]}
-    label="Username"
-    name="username"
-    required={true}
-  />
-  <Field
-    component={[Function]}
-    label="E-mail"
-    name="email"
-    required={true}
-  />
-  <Field
-    component={[Function]}
-    label="Password"
-    name="password"
-    required={true}
-    type="password"
-  />
-  <Field
-    component={[Function]}
-    label="Confirm Password"
-    name="confirmPassword"
-    required={true}
-    type="password"
-  />
+  <FormSection
+    component="div"
+    name="user"
+  >
+    <Field
+      component={[Function]}
+      label="First Name"
+      name="first_name"
+    />
+    <Field
+      component={[Function]}
+      label="Last Name"
+      name="last_name"
+    />
+    <Field
+      component={[Function]}
+      label="Username"
+      name="username"
+      required={true}
+    />
+    <Field
+      component={[Function]}
+      label="E-mail"
+      name="email"
+      required={true}
+    />
+    <Field
+      component={[Function]}
+      label="Password"
+      name="password"
+      required={true}
+      type="password"
+    />
+    <Field
+      component={[Function]}
+      label="Confirm Password"
+      name="confirm_password"
+      required={true}
+      type="password"
+    />
+  </FormSection>
   <WithStyles(Button)
     color="secondary"
     onClick={[Function]}

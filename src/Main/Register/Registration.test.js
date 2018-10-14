@@ -13,8 +13,16 @@ const defaultProps = {
 const setup = props => shallow(<Registration {...defaultProps} {...props} />);
 
 describe('<Registration />', () => {
-  it('renders AccountTypeForm when activeStep = 0', () => {
+  it('renders AccountTypeForm by default', () => {
     const wrapper = setup();
+
+    expect(wrapper.find(AccountTypeForm)).toHaveLength(1);
+    expect(wrapper.find(AccountInfoForm)).toHaveLength(0);
+    expect(wrapper.find(ProfileForm)).toHaveLength(0);
+  });
+
+  it('renders AccountTypeForm when activeStep = 0', () => {
+    const wrapper = setup({ activeStep: 0 });
 
     expect(wrapper.find(AccountTypeForm)).toHaveLength(1);
     expect(wrapper.find(AccountInfoForm)).toHaveLength(0);

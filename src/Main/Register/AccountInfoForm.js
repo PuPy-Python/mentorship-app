@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, FormSection } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import validate from './RegistrationValidation';
@@ -14,18 +14,20 @@ export const AccountInfoForm = ({ handleSubmit, classes, goToPrevious }) => (
       _____
     </Typography>
 
-    <Field name="firstname" label="First Name" component={TextField} />
-    <Field name="lastname" label="Last Name" component={TextField} />
-    <Field name="username" label="Username" component={TextField} required />
-    <Field name="email" label="E-mail" component={TextField} required />
-    <Field name="password" label="Password" type="password" component={TextField} required />
-    <Field
-      name="confirmPassword"
-      label="Confirm Password"
-      type="password"
-      component={TextField}
-      required
-    />
+    <FormSection name="user">
+      <Field name="first_name" label="First Name" component={TextField} />
+      <Field name="last_name" label="Last Name" component={TextField} />
+      <Field name="username" label="Username" component={TextField} required />
+      <Field name="email" label="E-mail" component={TextField} required />
+      <Field name="password" label="Password" type="password" component={TextField} required />
+      <Field
+        name="confirm_password"
+        label="Confirm Password"
+        type="password"
+        component={TextField}
+        required
+      />
+    </FormSection>
 
     <Button
       variant="raised"

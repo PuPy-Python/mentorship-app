@@ -1,5 +1,5 @@
 export const checkRequired = value => {
-  if (!value || (typeof value === 'string' && !value.trim())) {
+  if (!value || (typeof value === 'string' && !value.trim()) || value.length === 0) {
     return 'Required';
   }
 };
