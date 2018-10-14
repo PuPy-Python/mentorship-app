@@ -9,6 +9,7 @@ const defaultProps = {
   classes: {},
   goToPrevious: jest.fn(),
   handleSubmit: jest.fn(),
+  registration: {},
 };
 
 const setup = props => shallow(<ProfileForm {...defaultProps} {...props} />);

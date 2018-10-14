@@ -5,6 +5,7 @@ import { reducer as formReducer } from 'redux-form';
 import auth, * as fromAuth from './auth.js';
 import echo, * as fromEcho from './echo.js';
 import profile from './profile';
+import registration from './registration';
 
 export default combineReducers({
   auth: auth,
@@ -12,6 +13,7 @@ export default combineReducers({
   router: routerReducer,
   form: formReducer,
   profile: profile,
+  registration,
 });
 
 export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth);

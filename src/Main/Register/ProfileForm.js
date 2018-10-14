@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom';
 
 import RadioGroup from '../forms/RadioGroup';
 import validate from './RegistrationValidation';
@@ -33,8 +34,10 @@ export const ProfileForm = ({
   classes,
   goToPrevious,
   accountType = 'mentee',
+  history,
+  registration,
 }) => (
-  <form onSubmit={handleSubmit(createAccount)} noValidate>
+  <form onSubmit={handleSubmit(values => createAccount(values, history))} noValidate>
     <Typography variant="subheading" color="secondary" gutterBottom>
       CREATE YOUR {accountType.toUpperCase()} PROFILE
     </Typography>
@@ -93,6 +96,16 @@ export const ProfileForm = ({
     <Button variant="raised" type="submit" color="primary" size="large" className={classes.button}>
       CONTINUE
     </Button>
+    {registration.user && (
+      <Typography style={{ color: 'red' }}>
+        {Object.keys(registration.user).map(key => registration.user[key])}
+      </Typography>
+    )}
+    {registration.profile && (
+      <Typography style={{ color: 'red' }}>
+        {Object.keys(registration.profile).map(key => registration.profile[key])}
+      </Typography>
+    )}
   </form>
 );
 
@@ -102,6 +115,7 @@ const selector = formValueSelector('registration');
 
 const mapStateToProps = state => ({
   accountType: selector(state, 'accountType'),
+  registration: state.registration,
 });
 
 const mapDispatchToProps = { createAccount };
@@ -111,6 +125,7 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
+  withRouter,
   reduxForm({
     form: 'registration',
     destroyOnUnmount: false,

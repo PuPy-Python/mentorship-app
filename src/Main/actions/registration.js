@@ -1,17 +1,26 @@
 import { RSAA } from 'redux-api-middleware';
 
+import { API_URL } from '../../constants';
+
 export const CREATE_ACCOUNT_REQUEST = '@@jwt/CREATE_ACCOUNT_REQUEST';
 export const CREATE_ACCOUNT_SUCCESS = '@@jwt/CREATE_ACCOUNT_SUCCESS';
 export const CREATE_ACCOUNT_FAILURE = '@@jwt/CREATE_ACCOUNT_FAILURE';
 
-export const createAccount = values => {
+export const createAccount = (values, history) => {
   return {
     [RSAA]: {
-      endpoint: 'http://localhost:8000/api/v1/user/',
+      endpoint: `${API_URL}/user/`,
       method: 'POST',
       body: JSON.stringify(values),
       headers: { 'Content-Type': 'application/json' },
-      types: [CREATE_ACCOUNT_REQUEST, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE],
+      types: [
+        { type: CREATE_ACCOUNT_REQUEST },
+        {
+          type: CREATE_ACCOUNT_SUCCESS,
+          payload: () => history.push('/'),
+        },
+        { type: CREATE_ACCOUNT_FAILURE },
+      ],
     },
   };
 };
