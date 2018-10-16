@@ -8,7 +8,7 @@ import { authErrors, isAuthenticated } from '../reducers';
 
 const Login = props => {
   if (props.isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/Profile" />;
   }
 
   return (
@@ -23,9 +23,12 @@ const mapStateToProps = state => ({
   isAuthenticated: isAuthenticated(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
   onSubmit: (username, password) => {
     dispatch(login(username, password));
+    if (props.isAuthenticated) {
+      return <Redirect to="/Profile" />;
+    }
   },
 });
 
